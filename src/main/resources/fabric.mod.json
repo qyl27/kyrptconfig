@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "kyrptconfig",
+  "version": "1.1.10-1.17",
+  "name": "Kytpt Config",
+  "description": "Config library used in my mods",
+  "authors": [
+    "kyrptonaught"
+  ],
+  "contact": {
+    "homepage": "https://github.com/kyrptonaught/kyrptconfig",
+    "sources": "https://github.com/kyrptonaught/kyrptconfig"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "mixins": [
+    {
+      "config": "net.kyrptonaught.kyrptconfig.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  },
+  "custom": {
+    "modmenu:api": true
+  }
+}

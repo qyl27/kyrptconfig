@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "net.kyrptonaught.kyrptconfig.config.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "client": [
+    "ControlListWidgetMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
