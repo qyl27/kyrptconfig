@@ -80,7 +80,7 @@ public class NonConflictingKeyBindEntry extends ControlsListWidget.Entry {
     }
 
     @Override
-    public List<? extends Selectable> method_37025() {
+    public List<? extends Selectable> selectableChildren() {
         return ImmutableList.of(this.editButton, this.resetButton);
     }
 
@@ -110,7 +110,7 @@ public class NonConflictingKeyBindEntry extends ControlsListWidget.Entry {
         }
 
         @Override
-        public List<? extends Selectable> method_37025() {
+        public List<? extends Selectable> selectableChildren() {
             return Collections.emptyList();
         }
     }
