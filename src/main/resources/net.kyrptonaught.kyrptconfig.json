@@ -3,7 +3,8 @@
   "package": "net.kyrptonaught.kyrptconfig.config.mixin",
   "compatibilityLevel": "JAVA_16",
   "client": [
-    "ControlListWidgetMixin"
+    "ControlListWidgetMixin",
+    "KeybindingMixin"
   ],
   "injectors": {
     "defaultRequire": 1
