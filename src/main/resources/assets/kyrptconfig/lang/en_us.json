@@ -1,0 +1,8 @@
+{
+  "key.kyrptconfig.config.restartRequired": "Restart is Required",
+  "key.kyrptconfig.config.exit": "Exit",
+  "key.kyrptconfig.config.saveExit": "Save & Exit",
+  "key.kyrptconfig.config.true": "True",
+  "key.kyrptconfig.config.false": "False",
+  "key.kyrptconfig.config.reset": "Reset"
+}

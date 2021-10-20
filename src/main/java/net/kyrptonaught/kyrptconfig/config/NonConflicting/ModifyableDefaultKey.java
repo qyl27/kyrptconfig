@@ -4,5 +4,5 @@ import net.minecraft.client.util.InputUtil;
 
 public interface ModifyableDefaultKey {
 
-     void setDefaultKey(InputUtil.Key newKey);
+    void setDefaultKey(InputUtil.Key newKey);
 }

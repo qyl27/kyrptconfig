@@ -1,6 +1,6 @@
-package net.kyrptonaught.quickshulker.config.screen;
+package net.kyrptonaught.kyrptconfig.config.screen;
 
-import net.kyrptonaught.quickshulker.config.screen.items.ConfigItem;
+import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -38,8 +38,9 @@ public class ConfigSection extends Screen {
         return size;
     }
 
-    public void addConfigItem(ConfigItem item) {
+    public ConfigItem addConfigItem(ConfigItem item) {
         this.configs.add(item);
+        return item;
     }
 
     @Override
@@ -79,6 +80,14 @@ public class ConfigSection extends Screen {
         int runningY = startY + 5;
         for (ConfigItem item : configs) {
             item.render(matrices, 20, runningY, mouseX, mouseY, delta);
+            runningY += item.getSize() + 3;
+        }
+    }
+
+    public void render2(MatrixStack matrices, int startY, int mouseX, int mouseY, float delta) {
+        int runningY = startY + 5;
+        for (ConfigItem item : configs) {
+            item.render2(matrices, 20, runningY, mouseX, mouseY, delta);
             runningY += item.getSize() + 3;
         }
     }

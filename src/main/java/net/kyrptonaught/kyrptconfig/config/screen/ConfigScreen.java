@@ -1,10 +1,8 @@
-package net.kyrptonaught.quickshulker.config.screen;
+package net.kyrptonaught.kyrptconfig.config.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.kyrptonaught.quickshulker.config.screen.items.ConfigItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -13,7 +11,6 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class ConfigScreen extends Screen {
 
@@ -29,11 +26,11 @@ public class ConfigScreen extends Screen {
 
     protected void init() {
         int center = this.width / 2;
-        this.addDrawableChild(new NotSuckyButton(center - 153, height - 25, 150, 20, new TranslatableText("Exit"), widget -> {
+        this.addDrawableChild(new NotSuckyButton(center - 153, height - 25, 150, 20, new TranslatableText("key.kyrptconfig.config.exit"), widget -> {
             this.client.setScreen(previousScreen);
         }));
 
-        this.addDrawableChild(new NotSuckyButton(center + 3, height - 25, 150, 20, new TranslatableText("Save & Exit"), widget -> {
+        this.addDrawableChild(new NotSuckyButton(center + 3, height - 25, 150, 20, new TranslatableText("key.kyrptconfig.config.saveExit"), widget -> {
             for (ConfigSection section : sections) {
                 section.save();
             }
@@ -95,7 +92,7 @@ public class ConfigScreen extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-        sectionRenderY = MathHelper.clamp(sectionRenderY + (int) (amount * 10),  -calculateSectionHeight(), 0);
+        sectionRenderY = MathHelper.clamp(sectionRenderY + (int) (amount * 10), -calculateSectionHeight(), 0);
         return true;
     }
 
@@ -113,14 +110,16 @@ public class ConfigScreen extends Screen {
 
         sections.get(selectedSection).render(matrices, sectionRenderY + 55, mouseX, mouseY, delta);
 
-        renderBackgroundTexture(0, 55, 999);
-        renderBackgroundTexture(this.height - 30, 30, 999);
+        renderBackgroundTexture(0, 55, 100);
+        renderBackgroundTexture(this.height - 30, 30, 100);
 
+        drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 13, 0xffffff);
         for (int i = 0; i < sections.size(); i++) {
             sections.get(i).sectionSelectionBTN.active = i != selectedSection;
             sections.get(i).sectionSelectionBTN.render(matrices, mouseX, mouseY, delta);
         }
-        drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 13, 0xffffff);
+        sections.get(selectedSection).render2(matrices, sectionRenderY + 55, mouseX, mouseY, delta);
+
         super.render(matrices, mouseX, mouseY, delta);
     }
 

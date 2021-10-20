@@ -1,4 +1,4 @@
-package net.kyrptonaught.quickshulker.config.screen.items;
+package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.minecraft.text.Text;
 

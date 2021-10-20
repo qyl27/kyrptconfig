@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class ConfigManager {
     private final Jankson JANKSON = Jankson.builder().build();
-    private HashMap<String, ConfigStorage> configs = new HashMap<>();
+    private final HashMap<String, ConfigStorage> configs = new HashMap<>();
     protected File dir;
     protected String MOD_ID;
 
@@ -20,12 +20,12 @@ public class ConfigManager {
     }
 
     public AbstractConfigFile getConfig(String name) {
-        if(!name.endsWith(".json5")) name = name + ".json5";
+        if (!name.endsWith(".json5")) name = name + ".json5";
         return configs.get(name).config;
     }
 
     public void registerFile(String name, AbstractConfigFile defaultConfig) {
-        if(!name.endsWith(".json5")) name = name + ".json5";
+        if (!name.endsWith(".json5")) name = name + ".json5";
         configs.put(name, new ConfigStorage(new File(dir, name), defaultConfig));
     }
 
@@ -42,7 +42,7 @@ public class ConfigManager {
         public SingleConfigManager(String mod_id, AbstractConfigFile defaultConfig) {
             super(mod_id);
             dir = FabricLoader.getInstance().getConfigDirectory();
-            registerFile(mod_id+"config", defaultConfig);
+            registerFile(mod_id + "config", defaultConfig);
         }
 
         public AbstractConfigFile getConfig() {

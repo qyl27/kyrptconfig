@@ -1,9 +1,10 @@
-package net.kyrptonaught.quickshulker.config.screen.items;
+package net.kyrptonaught.kyrptconfig.config.screen.items;
 
-import net.kyrptonaught.quickshulker.config.screen.NotSuckyButton;
+import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
 public class BooleanItem extends ConfigItem<Boolean> {
@@ -22,10 +23,10 @@ public class BooleanItem extends ConfigItem<Boolean> {
     public void setValue(Boolean value) {
         super.setValue(value);
         if (value) {
-            boolWidget.setMessage(new LiteralText("True"));
+            boolWidget.setMessage(new TranslatableText("key.kyrptconfig.config.true"));
             boolWidget.setButtonColor(DyeColor.LIME.getFireworkColor());
         } else {
-            boolWidget.setMessage(new LiteralText("False"));
+            boolWidget.setMessage(new TranslatableText("key.kyrptconfig.config.false"));
             boolWidget.setButtonColor(DyeColor.RED.getFireworkColor());
         }
     }

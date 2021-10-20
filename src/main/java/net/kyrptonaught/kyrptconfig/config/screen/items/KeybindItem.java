@@ -1,7 +1,6 @@
-package net.kyrptonaught.quickshulker.config.screen.items;
+package net.kyrptonaught.kyrptconfig.config.screen.items;
 
-import net.kyrptonaught.quickshulker.config.screen.NotSuckyButton;
-import net.minecraft.client.gui.widget.ButtonWidget;
+import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
@@ -11,7 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
 public class KeybindItem extends ConfigItem<String> {
-    private NotSuckyButton keyButton;
+    private final NotSuckyButton keyButton;
     private Boolean isListening = false;
 
     public KeybindItem(Text name, String key, String defaultKey) {

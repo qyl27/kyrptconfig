@@ -1,4 +1,4 @@
-package net.kyrptonaught.quickshulker.config.screen;
+package net.kyrptonaught.kyrptconfig.config.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
