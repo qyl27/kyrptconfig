@@ -7,14 +7,13 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigScreen extends Screen {
 
-    int selectedSection = 0, sectionRenderY = 0;
+    int selectedSection = 0;
     List<ConfigSection> sections = new ArrayList<>();
     private Runnable saveRunnable;
     Screen previousScreen;
@@ -67,7 +66,6 @@ public class ConfigScreen extends Screen {
 
     public void setSelectedSection(int selectedSection) {
         this.selectedSection = selectedSection;
-        sectionRenderY = 0;
     }
 
     @Override
@@ -92,15 +90,7 @@ public class ConfigScreen extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-        sectionRenderY = MathHelper.clamp(sectionRenderY + (int) (amount * 10), -calculateSectionHeight(), 0);
-        return true;
-    }
-
-    public int calculateSectionHeight() {
-        int visibleHeight = this.height - 55 - 30;
-        int sectionSize = sections.get(selectedSection).getTotalSectionSize();
-        if (sectionSize <= visibleHeight) return 0;
-        return sectionSize - visibleHeight;
+        return sections.get(selectedSection).mouseScrolled(mouseX, mouseY, amount);
     }
 
     @Override
@@ -108,7 +98,7 @@ public class ConfigScreen extends Screen {
         renderBackgroundTexture(0);
         fillGradient(matrices, 0, 0, this.width, this.height, -1072689136, -804253680);
 
-        sections.get(selectedSection).render(matrices, sectionRenderY + 55, mouseX, mouseY, delta);
+        sections.get(selectedSection).render(matrices, 55, mouseX, mouseY, delta);
 
         renderBackgroundTexture(0, 55, 100);
         renderBackgroundTexture(this.height - 30, 30, 100);
@@ -118,7 +108,7 @@ public class ConfigScreen extends Screen {
             sections.get(i).sectionSelectionBTN.active = i != selectedSection;
             sections.get(i).sectionSelectionBTN.render(matrices, mouseX, mouseY, delta);
         }
-        sections.get(selectedSection).render2(matrices, sectionRenderY + 55, mouseX, mouseY, delta);
+        sections.get(selectedSection).render2(matrices, 55, mouseX, mouseY, delta);
 
         super.render(matrices, mouseX, mouseY, delta);
     }

@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 public abstract class ConfigItem<T> {
     private final Text fieldTitle;
+    private Text toolTipText;
     private Consumer<T> saveConsumer;
     protected NotSuckyButton resetButton;
     protected T value, defaultValue;
@@ -30,6 +31,11 @@ public abstract class ConfigItem<T> {
     public ConfigItem setRequiresRestart() {
         requiresRestart = true;
         ((MutableText) fieldTitle).append(" *");
+        return this;
+    }
+
+    public ConfigItem setToolTip(Text toolTip) {
+        this.toolTipText = toolTip;
         return this;
     }
 
@@ -98,7 +104,9 @@ public abstract class ConfigItem<T> {
     }
 
     public void renderToolTip(MatrixStack matrices, int x, int y) {
-        if (requiresRestart) {
+        if (toolTipText != null)
+            MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, toolTipText, x, y);
+        else if (requiresRestart) {
             MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, new TranslatableText("key.kyrptconfig.config.restartRequired"), x, y);
         }
     }
