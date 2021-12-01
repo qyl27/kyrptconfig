@@ -104,6 +104,7 @@ public class ConfigSection extends Screen {
         super.render(matrices, mouseX, mouseY, delta);
         int runningY = scrollOffset + startY + 5;
         for (ConfigItem configItem : configs) {
+            // if (runningY + configItem.getSize() > 55 && runningY < 55 + height)
             configItem.render(matrices, 20, runningY, mouseX, mouseY, delta);
             runningY += configItem.getSize() + 3;
         }

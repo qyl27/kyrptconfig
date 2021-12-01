@@ -7,10 +7,10 @@ import net.minecraft.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubItem extends ConfigItem {
-    boolean expanded = false;
-    int subStart = 0;
-    List<ConfigItem> configs = new ArrayList<>();
+public class SubItem<E> extends ConfigItem<E> {
+    protected boolean expanded = false;
+    protected int subStart = 0;
+    protected List<ConfigItem> configs = new ArrayList<>();
 
     public SubItem(Text name, boolean isExpanded) {
         super(name, null, null);
@@ -26,12 +26,13 @@ public class SubItem extends ConfigItem {
             if (item.requiresRestart())
                 return true;
         }
-        return false;
+        return super.requiresRestart();
     }
 
     public void save() {
         for (ConfigItem item : configs)
             item.save();
+        super.save();
     }
 
     public boolean isValueDefault() {

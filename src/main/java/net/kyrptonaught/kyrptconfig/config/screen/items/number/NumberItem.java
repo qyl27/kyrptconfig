@@ -1,5 +1,6 @@
-package net.kyrptonaught.kyrptconfig.config.screen.items;
+package net.kyrptonaught.kyrptconfig.config.screen.items.number;
 
+import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;

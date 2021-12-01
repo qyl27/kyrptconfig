@@ -7,6 +7,7 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import org.lwjgl.opengl.GL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +71,8 @@ public class ConfigScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        super.keyPressed(keyCode, scanCode, modifiers);
-        return sections.get(selectedSection).keyPressed(keyCode, scanCode, modifiers);
+        if (sections.get(selectedSection).keyPressed(keyCode, scanCode, modifiers)) return true;
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
@@ -95,13 +96,16 @@ public class ConfigScreen extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        matrices.push();
+        RenderSystem.enableBlend();
+        RenderSystem.enableDepthTest();
         renderBackgroundTexture(0);
         fillGradient(matrices, 0, 0, this.width, this.height, -1072689136, -804253680);
 
         sections.get(selectedSection).render(matrices, 55, mouseX, mouseY, delta);
 
-        renderBackgroundTexture(0, 55, 100);
-        renderBackgroundTexture(this.height - 30, 30, 100);
+        renderBackgroundTexture(0, 55, 0);
+        renderBackgroundTexture(this.height - 30, 30, 0);
 
         drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 13, 0xffffff);
         for (int i = 0; i < sections.size(); i++) {
@@ -111,6 +115,7 @@ public class ConfigScreen extends Screen {
         sections.get(selectedSection).render2(matrices, 55, mouseX, mouseY, delta);
 
         super.render(matrices, mouseX, mouseY, delta);
+        matrices.pop();
     }
 
     public void renderBackgroundTexture(int startY, int size, int vOffset) {
@@ -119,11 +124,12 @@ public class ConfigScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderTexture(0, OPTIONS_BACKGROUND_TEXTURE);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-        bufferBuilder.vertex(0.0D, (double) startY + size, 0.0D).texture(0.0F, (float) size / 32.0F + (float) vOffset).color(64, 64, 64, 255).next();
-        bufferBuilder.vertex(this.width, (double) startY + size, 0.0D).texture((float) this.width / 32.0F, (float) size / 32.0F + (float) vOffset).color(64, 64, 64, 255).next();
-        bufferBuilder.vertex(this.width, startY, 0.0D).texture((float) this.width / 32.0F, (float) vOffset).color(64, 64, 64, 255).next();
-        bufferBuilder.vertex(0.0D, startY, 0.0D).texture(0.0F, (float) vOffset).color(64, 64, 64, 255).next();
+        bufferBuilder.vertex(0.0D, (double) startY + size, 0).texture(0.0F, (float) size / 32.0F + (float) vOffset).color(64, 64, 64, 255).next();
+        bufferBuilder.vertex(this.width, (double) startY + size, 0).texture((float) this.width / 32.0F, (float) size / 32.0F + (float) vOffset).color(64, 64, 64, 255).next();
+        bufferBuilder.vertex(this.width, startY, 0).texture((float) this.width / 32.0F, (float) vOffset).color(64, 64, 64, 255).next();
+        bufferBuilder.vertex(0.0D, startY, 0).texture(0.0F, (float) vOffset).color(64, 64, 64, 255).next();
         tessellator.draw();
     }
 }

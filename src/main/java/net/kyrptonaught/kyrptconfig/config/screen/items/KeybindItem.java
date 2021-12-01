@@ -8,6 +8,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import org.lwjgl.glfw.GLFW;
 
 public class KeybindItem extends ConfigItem<String> {
     private final NotSuckyButton keyButton;
@@ -41,6 +42,10 @@ public class KeybindItem extends ConfigItem<String> {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (isListening) {
+            if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+                setValue(value);
+                return true;
+            }
             setValue(InputUtil.fromKeyCode(keyCode, scanCode).getTranslationKey());
             return true;
         }

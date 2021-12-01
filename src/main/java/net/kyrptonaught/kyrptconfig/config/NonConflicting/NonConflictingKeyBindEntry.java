@@ -9,6 +9,7 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.option.ControlsListWidget;
 import net.minecraft.client.gui.screen.option.ControlsOptionsScreen;
+import net.minecraft.client.gui.screen.option.KeybindsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.math.MatrixStack;
@@ -27,15 +28,15 @@ public class NonConflictingKeyBindEntry extends ControlsListWidget.Entry {
     private final Text bindingName;
     private final ButtonWidget editButton;
     private final ButtonWidget resetButton;
-    private final ControlsOptionsScreen controlsOptionsScreen;
+    private final KeybindsScreen keybindsScreen;
     private final int MaxKeyNameLength;
 
-    public NonConflictingKeyBindEntry(final KeyBinding binding, final Text text, ControlsOptionsScreen controlsOptionsScreen, int maxKeyNameLength) {
+    public NonConflictingKeyBindEntry(final KeyBinding binding, final Text text, KeybindsScreen keybindsScreen, int maxKeyNameLength) {
         this.binding = binding;
         this.bindingName = text;
-        this.controlsOptionsScreen = controlsOptionsScreen;
+        this.keybindsScreen = keybindsScreen;
         this.MaxKeyNameLength = maxKeyNameLength;
-        this.editButton = new ButtonWidget(0, 0, 75, 20, text, (buttonWidget) -> controlsOptionsScreen.focusedBinding = binding) {
+        this.editButton = new ButtonWidget(0, 0, 75, 20, text, (buttonWidget) -> keybindsScreen.selectedKeyBinding = binding) {
             protected MutableText getNarrationMessage() {
                 return binding.isUnbound() ? new TranslatableText("narrator.controls.unbound", text) : new TranslatableText("narrator.controls.bound", text, super.getNarrationMessage());
             }
@@ -48,7 +49,7 @@ public class NonConflictingKeyBindEntry extends ControlsListWidget.Entry {
     }
 
     public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-        boolean bl = controlsOptionsScreen.focusedBinding == this.binding;
+        boolean bl = keybindsScreen.selectedKeyBinding == this.binding;
         TextRenderer var10000 = MinecraftClient.getInstance().textRenderer;
         float var10003 = (float) (x + 90 - MaxKeyNameLength);
         int var10004 = y + entryHeight / 2;

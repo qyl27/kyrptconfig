@@ -7,12 +7,15 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class ConfigItem<T> {
     private final Text fieldTitle;
-    private Text toolTipText;
-    private Consumer<T> saveConsumer;
+    private List<Text> toolTipText;
+    protected Consumer<T> saveConsumer;
     protected NotSuckyButton resetButton;
     protected T value, defaultValue;
     private boolean requiresRestart = false;
@@ -35,7 +38,12 @@ public abstract class ConfigItem<T> {
     }
 
     public ConfigItem setToolTip(Text toolTip) {
-        this.toolTipText = toolTip;
+        this.toolTipText = List.of(toolTip);
+        return this;
+    }
+
+    public ConfigItem setToolTip(Text... toolTips) {
+        this.toolTipText = List.of(toolTips);
         return this;
     }
 
@@ -43,7 +51,7 @@ public abstract class ConfigItem<T> {
         return requiresRestart;
     }
 
-    private void runSaveConsumer(T value) {
+    protected void runSaveConsumer(T value) {
         if (saveConsumer != null && value != null)
             saveConsumer.accept(value);
     }
@@ -88,7 +96,6 @@ public abstract class ConfigItem<T> {
 
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         MinecraftClient.getInstance().textRenderer.draw(matrices, this.fieldTitle, x, y + 5, 16777215);
-
         if (resetButton != null) {
             this.resetButton.y = y;
             this.resetButton.x = MinecraftClient.getInstance().getWindow().getScaledWidth() - resetButton.getWidth() - 20;
