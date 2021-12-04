@@ -36,6 +36,8 @@ public class KeybindItem extends ConfigItem<String> {
     public MutableText getCleanName(String str) {
         if (I18n.hasTranslation(value))
             return new TranslatableText(str);
+        if(str == null || str.isBlank() || str.isEmpty())
+            return new TranslatableText("key.keyboard.unknown");
         return new LiteralText(str.substring(str.length() - 1).toUpperCase());
     }
 
