@@ -24,6 +24,12 @@ public class TextItem extends ConfigItem<String> {
     }
 
     @Override
+    public void resetToDefault() {
+        setValue(defaultValue);
+        valueEntry.setText(value);
+    }
+
+    @Override
     public void tick() {
         valueEntry.tick();
     }

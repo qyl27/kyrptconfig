@@ -66,8 +66,12 @@ public abstract class ConfigItem<T> {
 
     public void useDefaultResetBTN() {
         this.resetButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.reset"), widget -> {
-            setValue(defaultValue);
+            resetToDefault();
         });
+    }
+
+    public void resetToDefault(){
+        setValue(defaultValue);
     }
 
     public boolean isValueDefault() {
