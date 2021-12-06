@@ -1,6 +1,5 @@
 package net.kyrptonaught.kyrptconfig.config.screen.items.number;
 
-import net.kyrptonaught.kyrptconfig.config.screen.items.number.NumberItem;
 import net.minecraft.text.Text;
 
 

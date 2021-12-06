@@ -7,8 +7,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -70,7 +68,7 @@ public abstract class ConfigItem<T> {
         });
     }
 
-    public void resetToDefault(){
+    public void resetToDefault() {
         setValue(defaultValue);
     }
 

@@ -7,7 +7,6 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import org.lwjgl.opengl.GL;
 
 import java.util.ArrayList;
 import java.util.List;

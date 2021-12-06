@@ -14,8 +14,14 @@ public class TextItem extends ConfigItem<String> {
         super(name, value, defaultValue);
         useDefaultResetBTN();
         valueEntry = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 96, 17, new LiteralText("Text Entry"));
+        setMaxLength(256);
         valueEntry.setText(value);
         valueEntry.setChangedListener(this::setValue);
+    }
+
+    public TextItem setMaxLength(int length) {
+        valueEntry.setMaxLength(length);
+        return this;
     }
 
     @Override
