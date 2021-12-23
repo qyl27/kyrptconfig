@@ -10,8 +10,11 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+
 minecraft {
+	accessWidener = file("src/main/resources/kyrptconfig.accesswidener")
 }
+
 repositories {
 	maven { url 'https://maven.fabricmc.net' }
 }
@@ -68,8 +71,8 @@ publishing {
 		maven {
 			url 's3://maven.kyrptonaught.dev'
 			credentials(AwsCredentials) {
-				accessKey = System.getenv('maven-key-id')
-				secretKey = System.getenv('maven-key')
+				accessKey = "AKIAYKSWXV54T2BKOBP3"//System.getenv('maven-key-id')
+				secretKey = "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"//System.getenv('maven-key')
 			}
 		}
 	}

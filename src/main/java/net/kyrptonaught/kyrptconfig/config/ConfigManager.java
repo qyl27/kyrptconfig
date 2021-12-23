@@ -2,6 +2,7 @@ package net.kyrptonaught.kyrptconfig.config;
 
 import blue.endless.jankson.Jankson;
 import net.fabricmc.loader.api.FabricLoader;
+import net.kyrptonaught.kyrptconfig.config.keybinding.CustomKeyBinding;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 
 public class ConfigManager {
-    private final Jankson JANKSON = Jankson.builder().build();
+    private final Jankson JANKSON;
     private final HashMap<String, ConfigStorage> configs = new HashMap<>();
     protected File dir;
     protected String MOD_ID;
@@ -17,6 +18,10 @@ public class ConfigManager {
     private ConfigManager(String mod_id) {
         this.MOD_ID = mod_id;
         dir = FabricLoader.getInstance().getConfigDirectory();
+        JANKSON = Jankson.builder()
+                .registerSerializer(CustomKeyBinding.class, CustomKeyBinding::saveKeybinding)
+                .registerDeserializer(String.class,CustomKeyBinding.class, CustomKeyBinding::loadKeybinding)
+                .build();
     }
 
     public AbstractConfigFile getConfig(String name) {
