@@ -119,4 +119,8 @@ public abstract class ConfigItem<T> {
             MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, new TranslatableText("key.kyrptconfig.config.restartRequired"), x, y);
         }
     }
+      /*  maybe save this for later.
+      public ConfigItem(Text name, ConfigWDefaults config, Function<AbstractConfigFile,T> getValue) {
+        this(name, getValue.apply(config), getValue.apply(config.getDefaults()));
+    }*/
 }

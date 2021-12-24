@@ -1,10 +1,10 @@
-package net.kyrptonaught.kyrptconfig.config;
+package net.kyrptonaught.kyrptconfig;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.kyrptonaught.kyrptconfig.config.keybinding.NonConflicting.AddNonConflictingKeyBind;
-import net.kyrptonaught.kyrptconfig.config.keybinding.NonConflicting.NonConflictingKeyBindData;
-import net.kyrptonaught.kyrptconfig.config.keybinding.NonConflicting.NonConflictingKeyBinding;
+import net.kyrptonaught.kyrptconfig.config.NonConflicting.AddNonConflictingKeyBind;
+import net.kyrptonaught.kyrptconfig.config.NonConflicting.NonConflictingKeyBindData;
+import net.kyrptonaught.kyrptconfig.config.NonConflicting.NonConflictingKeyBinding;
 
 import java.util.ArrayList;
 import java.util.List;

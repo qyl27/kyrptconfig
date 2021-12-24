@@ -1,21 +1,22 @@
-package net.kyrptonaught.kyrptconfig.config.keybinding;
+package net.kyrptonaught.kyrptconfig.keybinding;
 
 import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.JsonPrimitive;
 import blue.endless.jankson.api.Marshaller;
+import net.kyrptonaught.kyrptconfig.config.ConfigDefaultCopyable;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Optional;
 
-public class CustomKeyBinding {
+public class CustomKeyBinding implements ConfigDefaultCopyable {
     public boolean unknownIsActivated = false;
     public String rawKey;
+    public InputUtil.Key defaultKey;
     public InputUtil.Key keycode;
     public boolean doParseKeycode = true;
-    private final String MOD_ID;
+    private String MOD_ID;
 
     public CustomKeyBinding(String MOD_ID) {
         this.MOD_ID = MOD_ID;
@@ -27,7 +28,9 @@ public class CustomKeyBinding {
     }
 
     public static CustomKeyBinding configDefault(String defaultKey) {
-        return new CustomKeyBinding("config").setRaw(defaultKey);
+        CustomKeyBinding customKeyBinding = new CustomKeyBinding("config").setRaw(defaultKey);
+        customKeyBinding.defaultKey = InputUtil.fromTranslationKey(defaultKey);
+        return customKeyBinding;
     }
 
     public CustomKeyBinding setRaw(String key) {
@@ -84,5 +87,12 @@ public class CustomKeyBinding {
 
     public static CustomKeyBinding loadKeybinding(String s, Marshaller m) {
         return CustomKeyBinding.configDefault(s);
+    }
+
+    @Override
+    public void copyFromDefault(ConfigDefaultCopyable otherDefault) {
+        this.MOD_ID = ((CustomKeyBinding) otherDefault).MOD_ID;
+        this.defaultKey = ((CustomKeyBinding) otherDefault).defaultKey;
+        this.unknownIsActivated = ((CustomKeyBinding) otherDefault).unknownIsActivated;
     }
 }

@@ -1,4 +1,4 @@
-package net.kyrptonaught.kyrptconfig.config.keybinding.NonConflicting;
+package net.kyrptonaught.kyrptconfig.config.NonConflicting;
 
 import java.util.List;
 

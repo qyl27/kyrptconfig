@@ -1,8 +1,9 @@
-package net.kyrptonaught.kyrptconfig.config.keybinding.NonConflicting;
+package net.kyrptonaught.kyrptconfig.config.NonConflicting;
 
 import net.minecraft.client.util.InputUtil;
 
 import java.util.function.Consumer;
+
 @Deprecated
 public class NonConflictingKeyBindData {
     public String name, category;
@@ -19,6 +20,7 @@ public class NonConflictingKeyBindData {
         this.keyCode = KeyCode;
         this.keySetEvent = keySetEvent;
     }
+
     @Deprecated
     public NonConflictingKeyBindData(String Name, String Category, InputUtil.Key boundKey, InputUtil.Key defaultKey, Consumer<InputUtil.Key> keySetEvent) {
         this(Name, Category, boundKey.getCategory(), boundKey.getCode(), keySetEvent);

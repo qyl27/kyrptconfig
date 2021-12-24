@@ -2,7 +2,7 @@ package net.kyrptonaught.kyrptconfig.config;
 
 import blue.endless.jankson.Jankson;
 import net.fabricmc.loader.api.FabricLoader;
-import net.kyrptonaught.kyrptconfig.config.keybinding.CustomKeyBinding;
+import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class ConfigManager {
         dir = FabricLoader.getInstance().getConfigDirectory();
         JANKSON = Jankson.builder()
                 .registerSerializer(CustomKeyBinding.class, CustomKeyBinding::saveKeybinding)
-                .registerDeserializer(String.class,CustomKeyBinding.class, CustomKeyBinding::loadKeybinding)
+                .registerDeserializer(String.class, CustomKeyBinding.class, CustomKeyBinding::loadKeybinding)
                 .build();
     }
 

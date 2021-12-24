@@ -1,7 +1,7 @@
-package net.kyrptonaught.kyrptconfig.config.keybinding.NonConflicting;
+package net.kyrptonaught.kyrptconfig.config.NonConflicting;
 
-import net.kyrptonaught.kyrptconfig.config.keybinding.CustomKeyBinding;
-import net.kyrptonaught.kyrptconfig.config.keybinding.DisplayOnlyKeyBind;
+import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
+import net.kyrptonaught.kyrptconfig.keybinding.DisplayOnlyKeyBind;
 import net.minecraft.client.util.InputUtil;
 
 import java.util.function.Consumer;

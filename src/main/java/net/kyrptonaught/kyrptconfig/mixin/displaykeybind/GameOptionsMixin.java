@@ -1,6 +1,6 @@
-package net.kyrptonaught.kyrptconfig.config.mixin;
+package net.kyrptonaught.kyrptconfig.mixin.displaykeybind;
 
-import net.kyrptonaught.kyrptconfig.config.keybinding.DisplayOnlyKeyBind;
+import net.kyrptonaught.kyrptconfig.keybinding.DisplayOnlyKeyBind;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.KeyBinding;
 import org.spongepowered.asm.mixin.Mixin;

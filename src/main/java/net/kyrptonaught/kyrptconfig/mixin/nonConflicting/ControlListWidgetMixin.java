@@ -1,6 +1,6 @@
-package net.kyrptonaught.kyrptconfig.config.mixin;
+package net.kyrptonaught.kyrptconfig.mixin.nonConflicting;
 
-import net.kyrptonaught.kyrptconfig.config.keybinding.NonConflicting.NonConflictingKeyBinding;
+import net.kyrptonaught.kyrptconfig.config.NonConflicting.NonConflictingKeyBinding;
 import net.minecraft.client.gui.screen.option.ControlsListWidget;
 import net.minecraft.client.option.KeyBinding;
 import org.spongepowered.asm.mixin.Mixin;

@@ -27,43 +27,43 @@ public class ConfigSection extends Screen {
     }
 
     public void save() {
-        for (ConfigItem configItem : configs) {
+        for (ConfigItem<?> configItem : configs) {
             configItem.save();
         }
     }
 
     public int getTotalSectionSize() {
         int size = configs.size() * 3 + 5;
-        for (ConfigItem configItem : configs) {
+        for (ConfigItem<?> configItem : configs) {
             size += configItem.getSize();
         }
         return size;
     }
 
-    public ConfigItem addConfigItem(ConfigItem item) {
+    public ConfigItem<?> addConfigItem(ConfigItem<?> item) {
         this.configs.add(item);
         return item;
     }
 
-    public ConfigItem insertConfigItem(ConfigItem item, int slot) {
+    public ConfigItem<?> insertConfigItem(ConfigItem<?> item, int slot) {
         this.configs.add(slot, item);
         return item;
     }
 
-    public ConfigItem removeConfigItem(int slot) {
+    public ConfigItem<?> removeConfigItem(int slot) {
         return this.configs.remove(slot);
     }
 
     @Override
     public void tick() {
         super.tick();
-        for (ConfigItem configItem : configs) {
+        for (ConfigItem<?> configItem : configs) {
             configItem.tick();
         }
     }
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        for (ConfigItem configItem : configs) {
+        for (ConfigItem<?> configItem : configs) {
             if (configItem.keyPressed(keyCode, scanCode, modifiers))
                 return true;
         }
@@ -72,7 +72,7 @@ public class ConfigSection extends Screen {
 
     @Override
     public boolean charTyped(char chr, int modifiers) {
-        for (ConfigItem configItem : configs) {
+        for (ConfigItem<?> configItem : configs) {
             if (configItem.charTyped(chr, modifiers))
                 return true;
         }
@@ -80,7 +80,7 @@ public class ConfigSection extends Screen {
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        for (ConfigItem configItem : configs) {
+        for (ConfigItem<?> configItem : configs) {
             configItem.mouseClicked(mouseX, mouseY, button);
         }
         mouseScrolled(mouseX, mouseY, 0); // update scroll if option changes screen size
@@ -103,7 +103,7 @@ public class ConfigSection extends Screen {
     public void render(MatrixStack matrices, int startY, int mouseX, int mouseY, float delta) {
         super.render(matrices, mouseX, mouseY, delta);
         int runningY = scrollOffset + startY + 5;
-        for (ConfigItem configItem : configs) {
+        for (ConfigItem<?> configItem : configs) {
             // if (runningY + configItem.getSize() > 55 && runningY < 55 + height)
             configItem.render(matrices, 20, runningY, mouseX, mouseY, delta);
             runningY += configItem.getSize() + 3;
@@ -112,7 +112,7 @@ public class ConfigSection extends Screen {
 
     public void render2(MatrixStack matrices, int startY, int mouseX, int mouseY, float delta) {
         int runningY = scrollOffset + startY + 5;
-        for (ConfigItem configItem : configs) {
+        for (ConfigItem<?> configItem : configs) {
             configItem.render2(matrices, 20, runningY, mouseX, mouseY, delta);
             runningY += configItem.getSize() + 3;
         }

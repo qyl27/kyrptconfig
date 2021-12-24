@@ -22,6 +22,7 @@ public class ConfigStorage {
         try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(saveFile, false), StandardCharsets.UTF_8)) {
             if (!saveFile.exists())
                 saveFile.createNewFile();
+            if (config instanceof ConfigWDefaults) ((ConfigWDefaults) config).beforeSave();
             String json = JANKSON.toJson(config).toJson(true, true, 0);
             out.write(json);
             // out.write(json.getBytes());
@@ -40,7 +41,13 @@ public class ConfigStorage {
         try {
             JsonObject configJson = JANKSON.load(saveFile);
             String regularized = configJson.toJson(false, false, 0);
+
+            //Class<T> genericClazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             config = JANKSON.fromJson(regularized, defaultConfig.getClass());
+            if (config instanceof ConfigWDefaults) {
+                ((ConfigWDefaults) config).DEFAULTS = defaultConfig;
+                ((ConfigWDefaults) config).afterLoad();
+            }
         } catch (Exception e) {
             failed = true;
         }
