@@ -28,7 +28,11 @@ public class CustomKeyBinding implements ConfigDefaultCopyable {
     }
 
     public static CustomKeyBinding configDefault(String defaultKey) {
-        CustomKeyBinding customKeyBinding = new CustomKeyBinding("config").setRaw(defaultKey);
+        return configDefault("config", defaultKey);
+    }
+
+    public static CustomKeyBinding configDefault(String MOD_ID, String defaultKey) {
+        CustomKeyBinding customKeyBinding = new CustomKeyBinding(MOD_ID).setRaw(defaultKey);
         customKeyBinding.defaultKey = InputUtil.fromTranslationKey(defaultKey);
         return customKeyBinding;
     }
@@ -53,11 +57,15 @@ public class CustomKeyBinding implements ConfigDefaultCopyable {
         return false;
     }
 
-    public boolean isKeybindPressed() {
+    private void parseKeycode() {
         if (doParseKeycode) {
             keycode = getKeybinding().orElse(null);
             doParseKeycode = false;
         }
+    }
+
+    public boolean isKeybindPressed() {
+        parseKeycode();
         if (keycode == null) // Invalid key
             return false;
         if (keycode == InputUtil.UNKNOWN_KEY)
@@ -68,6 +76,12 @@ public class CustomKeyBinding implements ConfigDefaultCopyable {
         else
             pressed = GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getCode()) == 1;
         return pressed;
+    }
+
+    public boolean matches(int keyCode, InputUtil.Type type) {
+        parseKeycode();
+        if (keycode == null) return false;
+        return keycode.getCategory() == type && keycode.getCode() == keyCode;
     }
 
     public Optional<InputUtil.Key> getKeybinding() {
