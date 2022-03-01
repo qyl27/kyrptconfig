@@ -16,6 +16,7 @@ public class ListStringEntry extends ConfigItem<String> {
     public ListStringEntry(String value) {
         super(new LiteralText(""), value, value);
         valueEntry = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 96, 17, new LiteralText("Text Entry"));
+        valueEntry.setMaxLength(256);
         valueEntry.setText(value);
         this.delButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.delete"), widget -> {
             setDeleted(true);

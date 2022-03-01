@@ -12,10 +12,10 @@ import java.util.Optional;
 
 public class CustomKeyBinding implements ConfigDefaultCopyable {
     public boolean unknownIsActivated = false;
-    public String rawKey;
-    public InputUtil.Key defaultKey;
-    public InputUtil.Key keycode;
-    public boolean doParseKeycode = true;
+    public String rawKey = "";
+    public String defaultKey = "";
+    public InputUtil.Key parsedKey;
+    public boolean doParseKey = true;
     private String MOD_ID;
 
     public CustomKeyBinding(String MOD_ID) {
@@ -33,13 +33,13 @@ public class CustomKeyBinding implements ConfigDefaultCopyable {
 
     public static CustomKeyBinding configDefault(String MOD_ID, String defaultKey) {
         CustomKeyBinding customKeyBinding = new CustomKeyBinding(MOD_ID).setRaw(defaultKey);
-        customKeyBinding.defaultKey = InputUtil.fromTranslationKey(defaultKey);
+        customKeyBinding.defaultKey = defaultKey;
         return customKeyBinding;
     }
 
     public CustomKeyBinding setRaw(String key) {
         rawKey = key;
-        doParseKeycode = true;
+        doParseKey = true;
         holding = false;
         return this;
     }
@@ -58,30 +58,30 @@ public class CustomKeyBinding implements ConfigDefaultCopyable {
     }
 
     private void parseKeycode() {
-        if (doParseKeycode) {
-            keycode = getKeybinding().orElse(null);
-            doParseKeycode = false;
+        if (doParseKey) {
+            parsedKey = getKeybinding().orElse(null);
+            doParseKey = false;
         }
     }
 
     public boolean isKeybindPressed() {
         parseKeycode();
-        if (keycode == null) // Invalid key
+        if (parsedKey == null) // Invalid key
             return false;
-        if (keycode == InputUtil.UNKNOWN_KEY)
+        if (parsedKey == InputUtil.UNKNOWN_KEY)
             return unknownIsActivated; // Always pressed for empty or explicitly "key.keyboard.unknown"
         boolean pressed;
-        if (keycode.getCategory() == InputUtil.Type.MOUSE)
-            pressed = GLFW.glfwGetMouseButton(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getCode()) == 1;
+        if (parsedKey.getCategory() == InputUtil.Type.MOUSE)
+            pressed = GLFW.glfwGetMouseButton(MinecraftClient.getInstance().getWindow().getHandle(), parsedKey.getCode()) == 1;
         else
-            pressed = GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getCode()) == 1;
+            pressed = GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), parsedKey.getCode()) == 1;
         return pressed;
     }
 
     public boolean matches(int keyCode, InputUtil.Type type) {
         parseKeycode();
-        if (keycode == null) return false;
-        return keycode.getCategory() == type && keycode.getCode() == keyCode;
+        if (parsedKey == null) return false;
+        return parsedKey.getCategory() == type && parsedKey.getCode() == keyCode;
     }
 
     public Optional<InputUtil.Key> getKeybinding() {
@@ -92,6 +92,17 @@ public class CustomKeyBinding implements ConfigDefaultCopyable {
         } catch (IllegalArgumentException e) {
             System.out.println(MOD_ID + ": unknown key entered");
             return Optional.empty();
+        }
+    }
+
+    public InputUtil.Key getDefaultKey() {
+        if (defaultKey == null || defaultKey.isEmpty())
+            return InputUtil.UNKNOWN_KEY;
+        try {
+            return InputUtil.fromTranslationKey(defaultKey);
+        } catch (IllegalArgumentException e) {
+            System.out.println(MOD_ID + ": unknown default key entered");
+            return InputUtil.UNKNOWN_KEY;
         }
     }
 

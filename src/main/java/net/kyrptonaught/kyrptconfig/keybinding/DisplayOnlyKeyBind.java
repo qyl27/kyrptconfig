@@ -16,7 +16,7 @@ public class DisplayOnlyKeyBind extends KeyBinding {
     }
 
     public DisplayOnlyKeyBind(String translationKey, String category, CustomKeyBinding customKeyBinding, Consumer<InputUtil.Key> keySet) {
-        super(translationKey, customKeyBinding.defaultKey.getCategory(), customKeyBinding.defaultKey.getCode(), category);
+        super(translationKey, customKeyBinding.getDefaultKey().getCategory(), customKeyBinding.getDefaultKey().getCode(), category);
         this.customKeyBinding = customKeyBinding;
         this.keySet = keySet;
         updateSetKey();

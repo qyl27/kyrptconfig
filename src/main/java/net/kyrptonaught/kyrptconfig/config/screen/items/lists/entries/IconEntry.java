@@ -11,14 +11,15 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.tag.Tag;
+
+import java.util.List;
 
 public class IconEntry<E> extends ListStringEntry {
     protected boolean allowTags = false;
-    protected Tag<E> enteredTag;
+    protected List<E> enteredTag;
     int selectedTag = 0;
     float deltas;
 
@@ -27,7 +28,7 @@ public class IconEntry<E> extends ListStringEntry {
         this.allowTags = allowTags;
     }
 
-    public Item getItemToRender(float delta) {
+    public ItemConvertible getItemToRender(float delta) {
         return Items.BARRIER;
     }
 
@@ -37,14 +38,14 @@ public class IconEntry<E> extends ListStringEntry {
             selectedTag++;
             deltas = 0;
         }
-        if (enteredTag == null || selectedTag >= enteredTag.values().size()) selectedTag = 0;
+        if (enteredTag == null || selectedTag >= enteredTag.size()) selectedTag = 0;
     }
 
     @Override
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         super.render(matrices, x, y, mouseX, mouseY, delta);
         if (deleted) return;
-        Item item = getItemToRender(delta);
+        ItemConvertible item = getItemToRender(delta);
         renderGuiItemModel(matrices, new ItemStack(item), x, y);
     }
 

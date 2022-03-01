@@ -10,7 +10,7 @@ public class NonConflictingKeyBindData {
     public InputUtil.Type inputType;
     public int keyCode;
     public Consumer<InputUtil.Key> keySetEvent;
-    public InputUtil.Key defaultKey;
+    public String defaultKey;
 
     @Deprecated
     public NonConflictingKeyBindData(String Name, String Category, InputUtil.Type type, int KeyCode, Consumer<InputUtil.Key> keySetEvent) {
@@ -22,8 +22,19 @@ public class NonConflictingKeyBindData {
     }
 
     @Deprecated
-    public NonConflictingKeyBindData(String Name, String Category, InputUtil.Key boundKey, InputUtil.Key defaultKey, Consumer<InputUtil.Key> keySetEvent) {
+    public NonConflictingKeyBindData(String Name, String Category, InputUtil.Key boundKey, String defaultKey, Consumer<InputUtil.Key> keySetEvent) {
         this(Name, Category, boundKey.getCategory(), boundKey.getCode(), keySetEvent);
         this.defaultKey = defaultKey;
+    }
+
+    @Deprecated
+    public InputUtil.Key getDefaultKey() {
+        if (defaultKey == null || defaultKey.isEmpty())
+            return InputUtil.UNKNOWN_KEY;
+        try {
+            return InputUtil.fromTranslationKey(defaultKey);
+        } catch (IllegalArgumentException e) {
+            return InputUtil.UNKNOWN_KEY;
+        }
     }
 }

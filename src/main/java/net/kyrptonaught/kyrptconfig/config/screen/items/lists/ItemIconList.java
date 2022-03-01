@@ -10,9 +10,17 @@ import java.util.List;
 public class ItemIconList extends StringList {
     boolean allowTags = false;
 
+    @Deprecated
     public ItemIconList(Text name, List<String> value, List<String> defaultValue) {
         super(name, value, defaultValue);
         setToolTip();
+    }
+
+    public ItemIconList(Text name, List<String> value, List<String> defaultValue, Boolean allowTags) {
+        super(name, value, defaultValue, false);
+        this.allowTags = allowTags;
+        setToolTip();
+        populateFromList();
     }
 
     public void setToolTip() {
@@ -25,6 +33,7 @@ public class ItemIconList extends StringList {
         }
     }
 
+    @Deprecated
     public ItemIconList setAllowTags(boolean allowTags) {
         this.allowTags = allowTags;
         setToolTip();

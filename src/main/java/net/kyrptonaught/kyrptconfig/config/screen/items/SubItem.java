@@ -10,7 +10,7 @@ import java.util.List;
 public class SubItem<E> extends ConfigItem<E> {
     protected boolean expanded = false;
     protected int subStart = 0;
-    protected List<ConfigItem> configs = new ArrayList<>();
+    protected List<ConfigItem<?>> configs = new ArrayList<>();
 
     public SubItem(Text name, boolean isExpanded) {
         super(name, null, null);
@@ -22,7 +22,7 @@ public class SubItem<E> extends ConfigItem<E> {
     }
 
     public boolean requiresRestart() {
-        for (ConfigItem item : configs) {
+        for (ConfigItem<?> item : configs) {
             if (item.requiresRestart())
                 return true;
         }
@@ -30,13 +30,13 @@ public class SubItem<E> extends ConfigItem<E> {
     }
 
     public void save() {
-        for (ConfigItem item : configs)
+        for (ConfigItem<?> item : configs)
             item.save();
         super.save();
     }
 
     public boolean isValueDefault() {
-        for (ConfigItem item : configs) {
+        for (ConfigItem<?> item : configs) {
             if (!item.isValueDefault())
                 return false;
         }
@@ -44,7 +44,7 @@ public class SubItem<E> extends ConfigItem<E> {
     }
 
     public void tick() {
-        for (ConfigItem item : configs)
+        for (ConfigItem<?> item : configs)
             item.tick();
     }
 
@@ -54,14 +54,14 @@ public class SubItem<E> extends ConfigItem<E> {
             expanded = !expanded;
 
         if (expanded) {
-            for (ConfigItem item : configs)
+            for (ConfigItem<?> item : configs)
                 item.mouseClicked(mouseX, mouseY, button);
         }
     }
 
     public boolean charTyped(char chr, int modifiers) {
         if (expanded) {
-            for (ConfigItem item : configs)
+            for (ConfigItem<?> item : configs)
                 if (item.charTyped(chr, modifiers))
                     return true;
         }
@@ -70,7 +70,7 @@ public class SubItem<E> extends ConfigItem<E> {
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (expanded) {
-            for (ConfigItem item : configs)
+            for (ConfigItem<?> item : configs)
                 if (item.keyPressed(keyCode, scanCode, modifiers))
                     return true;
         }
@@ -80,7 +80,7 @@ public class SubItem<E> extends ConfigItem<E> {
     public int getSize() {
         if (expanded) {
             int size = 20;
-            for (ConfigItem item : configs) {
+            for (ConfigItem<?> item : configs) {
                 size += item.getSize() + 3;
             }
             return size;
@@ -92,7 +92,7 @@ public class SubItem<E> extends ConfigItem<E> {
         configs.clear();
     }
 
-    public ConfigItem addConfigItem(ConfigItem item) {
+    public ConfigItem<?> addConfigItem(ConfigItem<?> item) {
         this.configs.add(item);
         return item;
     }
@@ -104,7 +104,7 @@ public class SubItem<E> extends ConfigItem<E> {
         subStart = y;
         if (expanded) {
             int runningY = subStart + 23;
-            for (ConfigItem item : configs) {
+            for (ConfigItem<?> item : configs) {
                 item.render(matrices, 30, runningY, mouseX, mouseY, delta);
                 runningY += item.getSize() + 3;
             }

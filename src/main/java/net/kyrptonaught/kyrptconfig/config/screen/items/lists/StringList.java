@@ -17,10 +17,14 @@ public class StringList extends SubItem<List<String>> {
     protected NotSuckyButton addButton, clearButton;
 
     public StringList(Text name, List<String> value, List<String> defaultValue) {
+        this(name, value, defaultValue, true);
+    }
+
+    public StringList(Text name, List<String> value, List<String> defaultValue, Boolean autoPop) {
         super(name, false);
         this.value = value;
         this.defaultValue = defaultValue;
-        populateFromList();
+        if (autoPop) populateFromList();
         this.addButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.add"), widget -> {
             addConfigItem(createNewEntry(""));
         });
@@ -55,7 +59,7 @@ public class StringList extends SubItem<List<String>> {
         return new ListStringEntry(string);
     }
 
-    private List<String> getNewValues() {
+    public List<String> getNewValues() {
         List<String> newValues = new ArrayList<>();
         configs.forEach(configItem -> {
             if (configItem instanceof ListStringEntry stringListEntry) {
@@ -96,7 +100,7 @@ public class StringList extends SubItem<List<String>> {
             this.addButton.x = clearButton.x - (addButton.getWidth() / 2) - 20;
             this.addButton.render(matrices, mouseX, mouseY, delta);
             int runningY = subStart + 23;
-            for (ConfigItem item : configs) {
+            for (ConfigItem<?> item : configs) {
                 item.render(matrices, 30, runningY, mouseX, mouseY, delta);
                 runningY += item.getSize() + 3;
             }
