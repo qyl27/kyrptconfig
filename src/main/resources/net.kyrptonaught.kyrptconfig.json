@@ -1,5 +1,5 @@
 {
-  "required": true,
+  "required": false,
   "package": "net.kyrptonaught.kyrptconfig.mixin",
   "compatibilityLevel": "JAVA_16",
   "client": [
