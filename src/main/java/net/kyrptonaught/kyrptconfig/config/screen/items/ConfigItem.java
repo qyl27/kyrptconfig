@@ -3,12 +3,17 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Language;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public abstract class ConfigItem<T> {
     private final Text fieldTitle;
@@ -24,23 +29,33 @@ public abstract class ConfigItem<T> {
         this.defaultValue = defaultValue;
     }
 
-    public ConfigItem setSaveConsumer(Consumer<T> save) {
+    public ConfigItem<?> setSaveConsumer(Consumer<T> save) {
         this.saveConsumer = save;
         return this;
     }
 
-    public ConfigItem setRequiresRestart() {
+    public ConfigItem<?> setRequiresRestart() {
         requiresRestart = true;
         ((MutableText) fieldTitle).append(" *");
         return this;
     }
 
-    public ConfigItem setToolTip(Text toolTip) {
+    public ConfigItem<?> setToolTipWithNewLine(String translatableKey){
+        String[] translated = Language.getInstance().get(translatableKey).split("\n");
+        this.toolTipText = new ArrayList<>();
+        for (String line : translated) {
+            this.toolTipText.add(new LiteralText(line));
+        }
+
+        return this;
+    }
+
+    public ConfigItem<?> setToolTip(Text toolTip) {
         this.toolTipText = List.of(toolTip);
         return this;
     }
 
-    public ConfigItem setToolTip(Text... toolTips) {
+    public ConfigItem<?> setToolTip(Text... toolTips) {
         this.toolTipText = List.of(toolTips);
         return this;
     }
