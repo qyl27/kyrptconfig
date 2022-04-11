@@ -9,8 +9,8 @@ import java.nio.file.Files;
 import java.util.HashMap;
 
 public class ConfigManager {
-    private final Jankson JANKSON = Jankson.builder().build();
-    private final HashMap<String, ConfigStorage> configs = new HashMap<>();
+    protected final Jankson JANKSON = Jankson.builder().build();
+    protected final HashMap<String, ConfigStorage> configs = new HashMap<>();
     protected File dir;
     protected String MOD_ID;
 
@@ -38,6 +38,10 @@ public class ConfigManager {
         save();
     }
 
+    public Jankson getJANKSON() {
+        return JANKSON;
+    }
+
     public static class SingleConfigManager extends ConfigManager {
         public SingleConfigManager(String mod_id, AbstractConfigFile defaultConfig) {
             super(mod_id);
@@ -60,6 +64,17 @@ public class ConfigManager {
                 } catch (IOException e) {
                 }
             }
+        }
+
+        public void load(String config) {
+            if (!config.endsWith(".json5")) config = config + ".json5";
+            this.configs.get(config).load(MOD_ID, JANKSON);
+            save(config);
+        }
+
+        public void save(String config) {
+            if (!config.endsWith(".json5")) config = config + ".json5";
+            this.configs.get(config).save(MOD_ID, JANKSON);
         }
     }
 }
