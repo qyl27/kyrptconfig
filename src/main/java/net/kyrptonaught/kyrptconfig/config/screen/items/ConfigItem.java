@@ -10,10 +10,8 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Language;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public abstract class ConfigItem<T> {
     private final Text fieldTitle;
@@ -40,7 +38,7 @@ public abstract class ConfigItem<T> {
         return this;
     }
 
-    public ConfigItem<?> setToolTipWithNewLine(String translatableKey){
+    public ConfigItem<?> setToolTipWithNewLine(String translatableKey) {
         String[] translated = Language.getInstance().get(translatableKey).split("\n");
         this.toolTipText = new ArrayList<>();
         for (String line : translated) {

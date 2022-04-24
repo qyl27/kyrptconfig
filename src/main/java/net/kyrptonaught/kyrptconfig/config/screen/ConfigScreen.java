@@ -30,10 +30,7 @@ public class ConfigScreen extends Screen {
         }));
 
         this.addDrawableChild(new NotSuckyButton(center + 3, height - 25, 150, 20, new TranslatableText("key.kyrptconfig.config.saveExit"), widget -> {
-            for (ConfigSection section : sections) {
-                section.save();
-            }
-            saveRunnable.run();
+            save();
             this.client.setScreen(previousScreen);
         }));
         for (ConfigSection section : sections) {
@@ -43,6 +40,14 @@ public class ConfigScreen extends Screen {
 
     public void setSavingEvent(Runnable save) {
         this.saveRunnable = save;
+    }
+
+    public void save() {
+        for (ConfigSection section : sections) {
+            section.save();
+        }
+        if (saveRunnable != null)
+            saveRunnable.run();
     }
 
     public void addConfigSection(ConfigSection item) {
