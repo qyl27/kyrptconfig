@@ -2,7 +2,6 @@ package net.kyrptonaught.kyrptconfig.config;
 
 import blue.endless.jankson.Jankson;
 import net.fabricmc.loader.api.FabricLoader;
-import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,18 +9,14 @@ import java.nio.file.Files;
 import java.util.HashMap;
 
 public class ConfigManager {
-    private final Jankson JANKSON;
-    private final HashMap<String, ConfigStorage> configs = new HashMap<>();
+    protected final Jankson JANKSON = Jankson.builder().build();
+    protected final HashMap<String, ConfigStorage> configs = new HashMap<>();
     protected File dir;
     protected String MOD_ID;
 
     private ConfigManager(String mod_id) {
         this.MOD_ID = mod_id;
         dir = FabricLoader.getInstance().getConfigDirectory();
-        JANKSON = Jankson.builder()
-                .registerSerializer(CustomKeyBinding.class, CustomKeyBinding::saveKeybinding)
-                .registerDeserializer(String.class, CustomKeyBinding.class, CustomKeyBinding::loadKeybinding)
-                .build();
     }
 
     public AbstractConfigFile getConfig(String name) {
@@ -41,6 +36,10 @@ public class ConfigManager {
     public void load() {
         configs.values().forEach(configStorage -> configStorage.load(MOD_ID, JANKSON));
         save();
+    }
+
+    public Jankson getJANKSON() {
+        return JANKSON;
     }
 
     public static class SingleConfigManager extends ConfigManager {
@@ -65,6 +64,17 @@ public class ConfigManager {
                 } catch (IOException e) {
                 }
             }
+        }
+
+        public void load(String config) {
+            if (!config.endsWith(".json5")) config = config + ".json5";
+            this.configs.get(config).load(MOD_ID, JANKSON);
+            save(config);
+        }
+
+        public void save(String config) {
+            if (!config.endsWith(".json5")) config = config + ".json5";
+            this.configs.get(config).save(MOD_ID, JANKSON);
         }
     }
 }
