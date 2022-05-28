@@ -4,10 +4,8 @@ import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import org.lwjgl.glfw.GLFW;
 
 public class KeybindItem extends ConfigItem<String> {
@@ -21,7 +19,7 @@ public class KeybindItem extends ConfigItem<String> {
             if (!this.isListening) {
                 widget.setMessage(this.getCleanName(this.value));
             } else {
-                widget.setMessage(new LiteralText("> ").append(this.getCleanName(this.value).append(new LiteralText(" <"))));
+                widget.setMessage(Text.literal("> ").append(this.getCleanName(this.value).append(Text.literal(" <"))));
             }
         });
         useDefaultResetBTN();
@@ -35,10 +33,10 @@ public class KeybindItem extends ConfigItem<String> {
 
     public MutableText getCleanName(String str) {
         if (I18n.hasTranslation(value))
-            return new TranslatableText(str);
+            return Text.translatable(str);
         if (str == null || str.isBlank() || str.isEmpty())
-            return new TranslatableText("key.keyboard.unknown");
-        return new LiteralText(str.substring(str.length() - 1).toUpperCase());
+            return Text.translatable("key.keyboard.unknown");
+        return Text.literal(str.substring(str.length() - 1).toUpperCase());
     }
 
     @Override

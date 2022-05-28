@@ -2,7 +2,6 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 public class EnumItem<T extends Enum<?>> extends ConfigItem<T> {
@@ -12,7 +11,7 @@ public class EnumItem<T extends Enum<?>> extends ConfigItem<T> {
     public EnumItem(Text name, T[] enums, T value, T defaultValue) {
         super(name, value, defaultValue);
         this.enumValues = enums;
-        this.displayWidget = new NotSuckyButton(0, 0, 100, 20, new LiteralText("EnumButton"), widget -> {
+        this.displayWidget = new NotSuckyButton(0, 0, 100, 20, Text.literal("EnumButton"), widget -> {
             cycleSelectedValue();
         });
         setValue(value);
@@ -23,7 +22,7 @@ public class EnumItem<T extends Enum<?>> extends ConfigItem<T> {
     @Override
     public void setValue(T value) {
         super.setValue(value);
-        displayWidget.setMessage(new LiteralText(value.toString()));
+        displayWidget.setMessage(Text.literal(value.toString()));
     }
 
     public void cycleSelectedValue() {

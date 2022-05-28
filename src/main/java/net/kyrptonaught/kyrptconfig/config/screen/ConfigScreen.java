@@ -6,7 +6,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +24,11 @@ public class ConfigScreen extends Screen {
 
     protected void init() {
         int center = this.width / 2;
-        this.addDrawableChild(new NotSuckyButton(center - 153, height - 25, 150, 20, new TranslatableText("key.kyrptconfig.config.exit"), widget -> {
+        this.addDrawableChild(new NotSuckyButton(center - 153, height - 25, 150, 20, Text.translatable("key.kyrptconfig.config.exit"), widget -> {
             this.client.setScreen(previousScreen);
         }));
 
-        this.addDrawableChild(new NotSuckyButton(center + 3, height - 25, 150, 20, new TranslatableText("key.kyrptconfig.config.saveExit"), widget -> {
+        this.addDrawableChild(new NotSuckyButton(center + 3, height - 25, 150, 20, Text.translatable("key.kyrptconfig.config.saveExit"), widget -> {
             save();
             this.client.setScreen(previousScreen);
         }));
