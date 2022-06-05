@@ -65,8 +65,8 @@ publishing {
 		maven {
 			url 's3://maven.kyrptonaught.dev'
 			credentials(AwsCredentials) {
-				accessKey = "AKIAYKSWXV54T2BKOBP3"//System.getenv('maven-key-id')
-				secretKey = "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"//System.getenv('maven-key')
+				accessKey = System.getenv('maven-key-id')
+				secretKey = System.getenv('maven-key')
 			}
 		}
 	}
