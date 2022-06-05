@@ -25,14 +25,13 @@ dependencies {
 	modImplementation  "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation  "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation ("com.terraformersmc:modmenu:3.2.2"){
+	modImplementation ("com.terraformersmc:modmenu:4.0.0-beta.4"){
 		transitive(false)
 	}
 
 	modApi "blue.endless:jankson:+"
 	include "blue.endless:jankson:+"
 }
-
 processResources {
 	inputs.property "version", project.version
 
@@ -55,6 +54,7 @@ jar {
 	}
 }
 
+// configure the maven publication
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
@@ -64,10 +64,10 @@ publishing {
 	}
 	repositories {
 		maven {
-			url 's3://maven.kyrptonaught.dev'
+			url ='s3://maven.kyrptonaught.dev'
 			credentials(AwsCredentials) {
-				accessKey = "AKIAYKSWXV54T2BKOBP3"//System.getenv('maven-key-id')
-				secretKey = "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"//System.getenv('maven-key')
+				accessKey = System.getenv('maven-key-id')
+				secretKey = System.getenv('maven-key')
 			}
 		}
 	}
