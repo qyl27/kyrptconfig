@@ -8,7 +8,6 @@ import net.kyrptonaught.kyrptconfig.config.screen.items.lists.entries.ListString
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +24,10 @@ public class StringList extends SubItem<List<String>> {
         this.value = value;
         this.defaultValue = defaultValue;
         if (autoPop) populateFromList();
-        this.addButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.add"), widget -> {
+        this.addButton = new NotSuckyButton(0, 0, 35, 20, Text.translatable("key.kyrptconfig.config.add"), widget -> {
             addConfigItem(createNewEntry(""));
         });
-        this.clearButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.clear"), widget -> {
+        this.clearButton = new NotSuckyButton(0, 0, 35, 20, Text.translatable("key.kyrptconfig.config.clear"), widget -> {
             setValue(new ArrayList<>());
         });
         useDefaultResetBTN();

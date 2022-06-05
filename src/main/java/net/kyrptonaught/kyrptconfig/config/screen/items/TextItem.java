@@ -3,7 +3,6 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 public class TextItem extends ConfigItem<String> {
@@ -13,7 +12,7 @@ public class TextItem extends ConfigItem<String> {
     public TextItem(Text name, String value, String defaultValue) {
         super(name, value, defaultValue);
         useDefaultResetBTN();
-        valueEntry = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 96, 17, new LiteralText("Text Entry"));
+        valueEntry = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 96, 17, Text.literal("Text Entry"));
         setMaxLength(256);
         valueEntry.setText(value);
         valueEntry.setChangedListener(this::setValue);

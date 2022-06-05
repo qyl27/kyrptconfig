@@ -3,10 +3,8 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Language;
 
 import java.util.ArrayList;
@@ -42,7 +40,7 @@ public abstract class ConfigItem<T> {
         String[] translated = Language.getInstance().get(translatableKey).split("\n");
         this.toolTipText = new ArrayList<>();
         for (String line : translated) {
-            this.toolTipText.add(new LiteralText(line));
+            this.toolTipText.add(Text.literal(line));
         }
 
         return this;
@@ -76,7 +74,7 @@ public abstract class ConfigItem<T> {
     }
 
     public void useDefaultResetBTN() {
-        this.resetButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.reset"), widget -> {
+        this.resetButton = new NotSuckyButton(0, 0, 35, 20, Text.translatable("key.kyrptconfig.config.reset"), widget -> {
             resetToDefault();
         });
     }
@@ -129,7 +127,7 @@ public abstract class ConfigItem<T> {
         if (toolTipText != null)
             MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, toolTipText, x, y);
         else if (requiresRestart) {
-            MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, new TranslatableText("key.kyrptconfig.config.restartRequired"), x, y);
+            MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, Text.translatable("key.kyrptconfig.config.restartRequired"), x, y);
         }
     }
       /*  maybe save this for later.
