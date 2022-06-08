@@ -2,21 +2,26 @@ package net.kyrptonaught.kyrptconfig.config;
 
 import blue.endless.jankson.Jankson;
 import net.fabricmc.loader.api.FabricLoader;
+import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 
 public class ConfigManager {
-    protected final Jankson JANKSON = Jankson.builder().build();
+    protected Jankson JANKSON;
     protected final HashMap<String, ConfigStorage> configs = new HashMap<>();
-    protected File dir;
+    protected Path dir;
     protected String MOD_ID;
 
     private ConfigManager(String mod_id) {
         this.MOD_ID = mod_id;
-        dir = FabricLoader.getInstance().getConfigDirectory();
+        dir = FabricLoader.getInstance().getConfigDir();
+
+        Jankson.Builder builder = Jankson.builder();
+        addDefaultSerializers(builder);
+        JANKSON = builder.build();
     }
 
     public AbstractConfigFile getConfig(String name) {
@@ -26,7 +31,7 @@ public class ConfigManager {
 
     public void registerFile(String name, AbstractConfigFile defaultConfig) {
         if (!name.endsWith(".json5")) name = name + ".json5";
-        configs.put(name, new ConfigStorage(new File(dir, name), defaultConfig));
+        configs.put(name, new ConfigStorage(dir.resolve(name), defaultConfig));
     }
 
     public void save() {
@@ -42,10 +47,25 @@ public class ConfigManager {
         return JANKSON;
     }
 
+    public void addSerializers(CustomSerializer... customSerializers) {
+        Jankson.Builder builder = Jankson.builder();
+        addDefaultSerializers(builder);
+        for (CustomSerializer customSerializer : customSerializers) {
+            customSerializer.addToBuilder(builder);
+        }
+        JANKSON = builder.build();
+    }
+
+    private void addDefaultSerializers(Jankson.Builder builder) {
+        new CustomSerializer(CustomKeyBinding.class, String.class)
+                .registerSerializer(CustomKeyBinding::saveKeybinding)
+                .registerDeserializer(CustomKeyBinding::loadKeybinding)
+                .addToBuilder(builder);
+    }
+
     public static class SingleConfigManager extends ConfigManager {
         public SingleConfigManager(String mod_id, AbstractConfigFile defaultConfig) {
             super(mod_id);
-            dir = FabricLoader.getInstance().getConfigDirectory();
             registerFile(mod_id + "config", defaultConfig);
         }
 
@@ -57,11 +77,11 @@ public class ConfigManager {
     public static class MultiConfigManager extends ConfigManager {
         public MultiConfigManager(String mod_id) {
             super(mod_id);
-            dir = new File(FabricLoader.getInstance().getConfigDirectory() + "/" + MOD_ID);
-            if (!Files.exists(dir.toPath())) {
+            dir = Path.of(dir + "/" + MOD_ID);
+            if (!Files.exists(dir)) {
                 try {
-                    Files.createDirectories(dir.toPath());
-                } catch (IOException e) {
+                    Files.createDirectories(dir);
+                } catch (IOException ignored) {
                 }
             }
         }
