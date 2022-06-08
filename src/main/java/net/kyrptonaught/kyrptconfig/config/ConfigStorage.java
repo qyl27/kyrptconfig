@@ -3,43 +3,43 @@ package net.kyrptonaught.kyrptconfig.config;
 import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 public class ConfigStorage {
-    private final File saveFile;
+    private final Path saveFile;
     public AbstractConfigFile config;
     private final AbstractConfigFile defaultConfig;
 
-    public ConfigStorage(File fileName, AbstractConfigFile defaultConfig) {
+    public ConfigStorage(Path fileName, AbstractConfigFile defaultConfig) {
         this.saveFile = fileName;
         this.defaultConfig = defaultConfig;
     }
 
     public void save(String MOD_ID, Jankson JANKSON) {
-        try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(saveFile, false), StandardCharsets.UTF_8)) {
-            if (!saveFile.exists())
-                saveFile.createNewFile();
+        try (OutputStreamWriter out = new OutputStreamWriter(Files.newOutputStream(saveFile), StandardCharsets.UTF_8)) {
+
             if (config instanceof ConfigWDefaults) ((ConfigWDefaults) config).beforeSave();
-            String json = JANKSON.toJson(config).toJson(true, true, 0);
+            String json = JANKSON.toJson(config).toJson(true, true);
             out.write(json);
             // out.write(json.getBytes());
 
         } catch (Exception e) {
-            System.out.println(MOD_ID + " Failed to save " + saveFile.getName());
+            System.out.println(MOD_ID + " Failed to save " + saveFile.getFileName().toString());
         }
     }
 
     public AbstractConfigFile load(String MOD_ID, Jankson JANKSON) {
-        if (!saveFile.exists() || !saveFile.canRead()) {
+        if (!Files.exists(saveFile) || !Files.isReadable(saveFile)) {
             System.out.println(MOD_ID + " Config not found! Creating one.");
             config = defaultConfig;
         }
         boolean failed = false;
         try {
-            JsonObject configJson = JANKSON.load(saveFile);
+            JsonObject configJson = JANKSON.load(Files.newInputStream(saveFile, StandardOpenOption.READ));
             String regularized = configJson.toJson(false, false, 0);
 
             //Class<T> genericClazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
