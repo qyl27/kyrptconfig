@@ -7,6 +7,7 @@ import blue.endless.jankson.api.Marshaller;
 
 import java.util.function.BiFunction;
 
+@Deprecated
 public class CustomSerializer {
     private final Class<?> saveClazz;
     private final Class<?> inputClazz;

@@ -1,16 +1,20 @@
 package net.kyrptonaught.kyrptconfig.keybinding;
 
 import blue.endless.jankson.JsonElement;
+import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.JsonPrimitive;
+import blue.endless.jankson.api.DeserializationException;
 import blue.endless.jankson.api.Marshaller;
 import net.kyrptonaught.kyrptconfig.config.ConfigDefaultCopyable;
+import net.kyrptonaught.kyrptconfig.config.CustomMarshaller;
+import net.kyrptonaught.kyrptconfig.config.CustomSerializable;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Optional;
 
-public class CustomKeyBinding implements ConfigDefaultCopyable {
+public class CustomKeyBinding implements ConfigDefaultCopyable, CustomSerializable {
     public boolean unknownIsActivated = false;
     public String rawKey = "";
     public String defaultKey = "";
@@ -119,5 +123,17 @@ public class CustomKeyBinding implements ConfigDefaultCopyable {
         this.MOD_ID = ((CustomKeyBinding) otherDefault).MOD_ID;
         this.defaultKey = ((CustomKeyBinding) otherDefault).defaultKey;
         this.unknownIsActivated = ((CustomKeyBinding) otherDefault).unknownIsActivated;
+    }
+
+    @Override
+    public JsonElement toJson(CustomMarshaller m) {
+        return new JsonPrimitive(this.rawKey);
+    }
+
+    @Override
+    public CustomSerializable fromJson(CustomMarshaller m, JsonElement obj, Class<CustomSerializable> clazz) {
+        if (obj instanceof JsonPrimitive string)
+            return CustomKeyBinding.configDefault(string.asString());
+        return CustomKeyBinding.configDefault("b");
     }
 }

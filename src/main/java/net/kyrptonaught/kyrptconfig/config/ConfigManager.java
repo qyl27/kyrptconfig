@@ -19,7 +19,7 @@ public class ConfigManager {
         this.MOD_ID = mod_id;
         dir = FabricLoader.getInstance().getConfigDir();
 
-        Jankson.Builder builder = Jankson.builder();
+        Jankson.Builder builder = CustomJankson.customJanksonBuilder();
         addDefaultSerializers(builder);
         JANKSON = builder.build();
     }
@@ -27,6 +27,11 @@ public class ConfigManager {
     public AbstractConfigFile getConfig(String name) {
         if (!name.endsWith(".json5")) name = name + ".json5";
         return configs.get(name).config;
+    }
+
+    public AbstractConfigFile getConfigDefault(String name) {
+        if (!name.endsWith(".json5")) name = name + ".json5";
+        return configs.get(name).getDefaultConfig();
     }
 
     public void registerFile(String name, AbstractConfigFile defaultConfig) {
@@ -47,6 +52,7 @@ public class ConfigManager {
         return JANKSON;
     }
 
+    @Deprecated
     public void addSerializers(CustomSerializer... customSerializers) {
         Jankson.Builder builder = Jankson.builder();
         addDefaultSerializers(builder);
@@ -71,6 +77,10 @@ public class ConfigManager {
 
         public AbstractConfigFile getConfig() {
             return getConfig(MOD_ID + "config");
+        }
+
+        public AbstractConfigFile getConfigDefault() {
+            return getConfigDefault(MOD_ID + "config");
         }
     }
 

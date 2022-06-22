@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class ConfigItem<T> {
-    private final Text fieldTitle;
+    private Text fieldTitle;
     private List<Text> toolTipText;
-    protected Consumer<T> saveConsumer;
+    protected Consumer<T> saveConsumer, valueUpdatedEvent;
     protected NotSuckyButton resetButton;
     protected T value, defaultValue;
     private boolean requiresRestart = false;
+    private boolean isHidden = false;
 
     public ConfigItem(Text name, T value, T defaultValue) {
         this.fieldTitle = name;
@@ -25,14 +26,24 @@ public abstract class ConfigItem<T> {
         this.defaultValue = defaultValue;
     }
 
-    public ConfigItem<?> setSaveConsumer(Consumer<T> save) {
-        this.saveConsumer = save;
+    public ConfigItem<?> setSaveConsumer(Consumer<T> saveConsumer) {
+        this.saveConsumer = saveConsumer;
+        return this;
+    }
+
+    public ConfigItem<?> setValueUpdatedEvent(Consumer<T> valueUpdatedEvent) {
+        this.valueUpdatedEvent = valueUpdatedEvent;
         return this;
     }
 
     public ConfigItem<?> setRequiresRestart() {
         requiresRestart = true;
         ((MutableText) fieldTitle).append(" *");
+        return this;
+    }
+
+    public ConfigItem<?> setTitleText(Text title) {
+        this.fieldTitle = title;
         return this;
     }
 
@@ -56,6 +67,15 @@ public abstract class ConfigItem<T> {
         return this;
     }
 
+    public ConfigItem<?> setHidden(boolean hidden) {
+        this.isHidden = hidden;
+        return this;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
     public boolean requiresRestart() {
         return requiresRestart;
     }
@@ -70,6 +90,7 @@ public abstract class ConfigItem<T> {
     }
 
     public int getSize() {
+        if (isHidden) return 0;
         return 20;
     }
 
@@ -89,12 +110,15 @@ public abstract class ConfigItem<T> {
 
     public void setValue(T value) {
         this.value = value;
+        if (valueUpdatedEvent != null)
+            valueUpdatedEvent.accept(this.value);
     }
 
     public void tick() {
     }
 
     public void mouseClicked(double mouseX, double mouseY, int button) {
+        if (isHidden) return;
         if (resetButton != null)
             resetButton.mouseClicked(mouseX, mouseY, button);
     }
@@ -108,6 +132,7 @@ public abstract class ConfigItem<T> {
     }
 
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
+        if (isHidden) return;
         MinecraftClient.getInstance().textRenderer.draw(matrices, this.fieldTitle, x, y + 5, 16777215);
         if (resetButton != null) {
             this.resetButton.y = y;
@@ -118,6 +143,7 @@ public abstract class ConfigItem<T> {
     }
 
     public void render2(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
+        if (isHidden) return;
         if (mouseX > x && mouseX < x + MinecraftClient.getInstance().textRenderer.getWidth(fieldTitle) &&
                 mouseY > y && mouseY < y + 12)
             renderToolTip(matrices, mouseX, mouseY);

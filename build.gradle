@@ -29,8 +29,8 @@ dependencies {
 		transitive(false)
 	}
 
-	modApi "blue.endless:jankson:+"
-	include "blue.endless:jankson:+"
+	//modApi "blue.endless:jankson:+"
+	//include "blue.endless:jankson:+"
 }
 processResources {
 	inputs.property "version", project.version
