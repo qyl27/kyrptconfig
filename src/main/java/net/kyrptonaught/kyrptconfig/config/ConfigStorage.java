@@ -23,8 +23,6 @@ public class ConfigStorage {
 
     public void save(String MOD_ID, Jankson JANKSON) {
         try (OutputStream os = Files.newOutputStream(saveFile); OutputStreamWriter out = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
-            if (config instanceof ConfigWDefaults)
-                ((ConfigWDefaults) config).beforeSave();
             String json = JANKSON.toJson(config).toJson(true, true);
             out.write(json);
         } catch (Exception e) {
@@ -45,10 +43,6 @@ public class ConfigStorage {
             String regularized = configJson.toJson(false, false, 0);
 
             config = JANKSON.fromJson(regularized, defaultConfig.getClass());
-            if (config instanceof ConfigWDefaults) {
-                ((ConfigWDefaults) config).DEFAULTS = defaultConfig;
-                ((ConfigWDefaults) config).afterLoad();
-            }
         } catch (Exception e) {
             failed = true;
         }

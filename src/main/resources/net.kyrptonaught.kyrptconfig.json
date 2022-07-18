@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "displaykeybind.GameOptionsMixin",
+    "displaykeybind.GameOptions$VisitorMixin",
     "nonConflicting.ControlListWidgetMixin"
   ],
   "injectors": {

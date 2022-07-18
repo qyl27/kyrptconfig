@@ -1,5 +1,6 @@
 package net.kyrptonaught.kyrptconfig.config;
 
+@Deprecated
 public class ConfigWDefaults implements AbstractConfigFile {
     public transient AbstractConfigFile DEFAULTS;
 

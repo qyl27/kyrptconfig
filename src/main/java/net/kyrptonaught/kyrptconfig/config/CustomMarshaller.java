@@ -19,12 +19,8 @@ public class CustomMarshaller extends MarshallerImpl {
         return super.serialize(obj);
     }
 
-    public <T> T marshall(Class<T> clazz, JsonElement elem, boolean failFast) throws DeserializationException {
-        if (CustomSerializable.class.isAssignableFrom(clazz)) {
-            CustomSerializable custom = (CustomSerializable) TypeMagic.createAndCast(clazz, failFast);
-            return (T) custom.fromJson(this, elem, (Class<CustomSerializable>) clazz);
-        }
-        return super.marshall(clazz, elem, failFast);
+    public CustomSerializable marshallCustomSerializable(Class<CustomSerializable> clazz, CustomSerializable origianlObject, JsonElement elem) throws DeserializationException {
+        return origianlObject.fromJson(this, elem, clazz);
     }
 
     public <T> T marshallNonCustom(Class<T> clazz, JsonElement elem, boolean failFast) throws DeserializationException {

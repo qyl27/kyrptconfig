@@ -31,6 +31,8 @@ import blue.endless.jankson.api.DeserializationException;
 import blue.endless.jankson.impl.serializer.DeserializerFunctionPool;
 import blue.endless.jankson.impl.serializer.InternalDeserializerFunction;
 import blue.endless.jankson.magic.TypeMagic;
+import net.kyrptonaught.kyrptconfig.config.CustomMarshaller;
+import net.kyrptonaught.kyrptconfig.config.CustomSerializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -163,8 +165,13 @@ public class POJODeserializer {
         Class<?> fieldClass = field.getType();
 
         if (!isCollections(fieldClass)) {
-            //Try to directly marshall
-            Object result = marshaller.marshallCarefully(fieldClass, elem);
+            Object result;
+            if (CustomSerializable.class.isAssignableFrom(fieldClass) && marshaller instanceof CustomMarshaller customMarshaller) {
+                Object originalObject = field.get(parent);
+                result = customMarshaller.marshallCustomSerializable((Class<CustomSerializable>) fieldClass, (CustomSerializable) originalObject, elem);
+            } else
+                result = marshaller.marshallCarefully(fieldClass, elem);
+
             field.set(parent, result);
             return true;
         }

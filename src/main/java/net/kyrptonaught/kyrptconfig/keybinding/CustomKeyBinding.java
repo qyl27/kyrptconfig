@@ -1,11 +1,7 @@
 package net.kyrptonaught.kyrptconfig.keybinding;
 
 import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.JsonPrimitive;
-import blue.endless.jankson.api.DeserializationException;
-import blue.endless.jankson.api.Marshaller;
-import net.kyrptonaught.kyrptconfig.config.ConfigDefaultCopyable;
 import net.kyrptonaught.kyrptconfig.config.CustomMarshaller;
 import net.kyrptonaught.kyrptconfig.config.CustomSerializable;
 import net.minecraft.client.MinecraftClient;
@@ -14,7 +10,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.Optional;
 
-public class CustomKeyBinding implements ConfigDefaultCopyable, CustomSerializable {
+public class CustomKeyBinding implements CustomSerializable {
     public boolean unknownIsActivated = false;
     public String rawKey = "";
     public String defaultKey = "";
@@ -29,10 +25,6 @@ public class CustomKeyBinding implements ConfigDefaultCopyable, CustomSerializab
     public CustomKeyBinding(String MOD_ID, boolean unknownIsActivated) {
         this.unknownIsActivated = unknownIsActivated;
         this.MOD_ID = MOD_ID;
-    }
-
-    public static CustomKeyBinding configDefault(String defaultKey) {
-        return configDefault("config", defaultKey);
     }
 
     public static CustomKeyBinding configDefault(String MOD_ID, String defaultKey) {
@@ -110,21 +102,6 @@ public class CustomKeyBinding implements ConfigDefaultCopyable, CustomSerializab
         }
     }
 
-    public static JsonElement saveKeybinding(CustomKeyBinding keyBinding, Marshaller m) {
-        return new JsonPrimitive(keyBinding.rawKey);
-    }
-
-    public static CustomKeyBinding loadKeybinding(String s, Marshaller m) {
-        return CustomKeyBinding.configDefault(s);
-    }
-
-    @Override
-    public void copyFromDefault(ConfigDefaultCopyable otherDefault) {
-        this.MOD_ID = ((CustomKeyBinding) otherDefault).MOD_ID;
-        this.defaultKey = ((CustomKeyBinding) otherDefault).defaultKey;
-        this.unknownIsActivated = ((CustomKeyBinding) otherDefault).unknownIsActivated;
-    }
-
     @Override
     public JsonElement toJson(CustomMarshaller m) {
         return new JsonPrimitive(this.rawKey);
@@ -133,7 +110,7 @@ public class CustomKeyBinding implements ConfigDefaultCopyable, CustomSerializab
     @Override
     public CustomSerializable fromJson(CustomMarshaller m, JsonElement obj, Class<CustomSerializable> clazz) {
         if (obj instanceof JsonPrimitive string)
-            return CustomKeyBinding.configDefault(string.asString());
-        return CustomKeyBinding.configDefault("b");
+            setRaw(string.asString());
+        return this;
     }
 }

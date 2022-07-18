@@ -2,7 +2,6 @@ package net.kyrptonaught.kyrptconfig.config;
 
 import blue.endless.jankson.Jankson;
 import net.fabricmc.loader.api.FabricLoader;
-import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,7 +19,6 @@ public class ConfigManager {
         dir = FabricLoader.getInstance().getConfigDir();
 
         Jankson.Builder builder = CustomJankson.customJanksonBuilder();
-        addDefaultSerializers(builder);
         JANKSON = builder.build();
     }
 
@@ -55,19 +53,12 @@ public class ConfigManager {
     @Deprecated
     public void addSerializers(CustomSerializer... customSerializers) {
         Jankson.Builder builder = Jankson.builder();
-        addDefaultSerializers(builder);
         for (CustomSerializer customSerializer : customSerializers) {
             customSerializer.addToBuilder(builder);
         }
         JANKSON = builder.build();
     }
 
-    private void addDefaultSerializers(Jankson.Builder builder) {
-        new CustomSerializer(CustomKeyBinding.class, String.class)
-                .registerSerializer(CustomKeyBinding::saveKeybinding)
-                .registerDeserializer(CustomKeyBinding::loadKeybinding)
-                .addToBuilder(builder);
-    }
 
     public static class SingleConfigManager extends ConfigManager {
         public SingleConfigManager(String mod_id, AbstractConfigFile defaultConfig) {
