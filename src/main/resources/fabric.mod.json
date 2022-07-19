@@ -24,6 +24,9 @@
   "entrypoints": {
     "client": [
       "net.kyrptonaught.kyrptconfig.KyrptConfigClientInit"
+    ],
+    "modmenu": [
+      "net.kyrptonaught.kyrptconfig.example.ExampleConfig"
     ]
   },
   "depends": {
