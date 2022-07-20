@@ -5,7 +5,10 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.fabricmc.loader.api.FabricLoader;
 import net.kyrptonaught.kyrptconfig.config.screen.ConfigScreen;
 import net.kyrptonaught.kyrptconfig.config.screen.ConfigSection;
-import net.kyrptonaught.kyrptconfig.config.screen.items.*;
+import net.kyrptonaught.kyrptconfig.config.screen.items.BooleanItem;
+import net.kyrptonaught.kyrptconfig.config.screen.items.ButtonItem;
+import net.kyrptonaught.kyrptconfig.config.screen.items.KeybindItem;
+import net.kyrptonaught.kyrptconfig.config.screen.items.TextItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.StringList;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
@@ -41,7 +44,7 @@ public class ExampleConfig implements ModMenuApi {
             blackListSection.addConfigItem(new BooleanItem(Text.translatable("key.kyrptconfig.exampleconfig.showdebug"), true, false).setToolTipWithNewLine("key.kyrptconfig.exampleconfig.debugtooltip"));
 
             String DOWNLOAD_URL = "https://raw.githubusercontent.com/kyrptonaught/Inventory-Sorter/1.19/DownloadableBlacklist.json5";
-            TextItem blackListURL = (TextItem) new TextItem(Text.translatable("key.kyrptconfig.exampleconfig.blacklistURL"), DOWNLOAD_URL, DOWNLOAD_URL).setMaxLength(1024);
+            TextItem blackListURL = new TextItem(Text.translatable("key.kyrptconfig.exampleconfig.blacklistURL"), DOWNLOAD_URL, DOWNLOAD_URL).setMaxLength(1024);
             blackListSection.addConfigItem(blackListURL);
 
             StringList hideList = (StringList) new StringList(Text.translatable("key.kyrptconfig.exampleconfig.hidesort"), new ArrayList<>(), new ArrayList<>()).setToolTipWithNewLine("key.kyrptconfig.exampleconfig.hidetooltip");
@@ -54,7 +57,7 @@ public class ExampleConfig implements ModMenuApi {
 
             blackListSection.addConfigItem(hideList);
             blackListSection.addConfigItem(nosortList);
-            if (FabricLoader.getInstance().isDevelopmentEnvironment() )
+            if (FabricLoader.getInstance().isDevelopmentEnvironment())
                 return configScreen;
             return null;
         };

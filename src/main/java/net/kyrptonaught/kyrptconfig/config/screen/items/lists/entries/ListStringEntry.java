@@ -79,7 +79,7 @@ public class ListStringEntry extends ConfigItem<String> {
             this.valueEntry.setWidth(125);
 
         this.valueEntry.y = y + 1;
-        this.valueEntry.x = delButton.x- (valueEntry.getWidth()) - 7;
+        this.valueEntry.x = delButton.x - (valueEntry.getWidth()) - 7;
         this.valueEntry.render(matrices, mouseX, mouseY, delta);
     }
 }

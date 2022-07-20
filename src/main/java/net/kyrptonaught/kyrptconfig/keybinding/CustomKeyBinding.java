@@ -1,7 +1,7 @@
 package net.kyrptonaught.kyrptconfig.keybinding;
 
-import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.JsonPrimitive;
+import net.kyrptonaught.jankson.JsonElement;
+import net.kyrptonaught.jankson.JsonPrimitive;
 import net.kyrptonaught.kyrptconfig.config.CustomMarshaller;
 import net.kyrptonaught.kyrptconfig.config.CustomSerializable;
 import net.minecraft.client.MinecraftClient;
@@ -16,7 +16,7 @@ public class CustomKeyBinding implements CustomSerializable {
     public String defaultKey = "";
     public InputUtil.Key parsedKey;
     public boolean doParseKey = true;
-    private String MOD_ID;
+    private final String MOD_ID;
 
     public CustomKeyBinding(String MOD_ID) {
         this.MOD_ID = MOD_ID;

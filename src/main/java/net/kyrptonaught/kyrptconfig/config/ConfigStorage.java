@@ -1,7 +1,7 @@
 package net.kyrptonaught.kyrptconfig.config;
 
-import blue.endless.jankson.Jankson;
-import blue.endless.jankson.JsonObject;
+import net.kyrptonaught.jankson.Jankson;
+import net.kyrptonaught.jankson.JsonObject;
 
 import java.io.InputStream;
 import java.io.OutputStream;

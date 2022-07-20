@@ -4,7 +4,6 @@ import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.List;

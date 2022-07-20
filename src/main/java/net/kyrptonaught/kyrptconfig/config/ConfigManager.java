@@ -1,7 +1,7 @@
 package net.kyrptonaught.kyrptconfig.config;
 
-import blue.endless.jankson.Jankson;
 import net.fabricmc.loader.api.FabricLoader;
+import net.kyrptonaught.jankson.Jankson;
 
 import java.io.IOException;
 import java.nio.file.Files;

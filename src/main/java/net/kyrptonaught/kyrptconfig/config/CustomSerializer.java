@@ -1,9 +1,9 @@
 package net.kyrptonaught.kyrptconfig.config;
 
-import blue.endless.jankson.Jankson;
-import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.api.DeserializerFunction;
-import blue.endless.jankson.api.Marshaller;
+import net.kyrptonaught.jankson.Jankson;
+import net.kyrptonaught.jankson.JsonElement;
+import net.kyrptonaught.jankson.api.DeserializerFunction;
+import net.kyrptonaught.jankson.api.Marshaller;
 
 import java.util.function.BiFunction;
 

@@ -149,7 +149,7 @@ public abstract class ConfigItem<T> {
         if (mouseY > y && mouseY < height)
             DrawableHelper.fill(matrices, 0, y - 1, width, height + 1, ColorHelper.Argb.getArgb(255, 55, 55, 55));
 
-        MinecraftClient.getInstance().textRenderer.draw(matrices, this.fieldTitle, x, y + 5, 16777215);
+        MinecraftClient.getInstance().textRenderer.draw(matrices, this.fieldTitle, x, y + 6, 16777215);
         if (resetButton != null) {
             this.resetButton.y = y;
             this.resetButton.x = width - resetButton.getWidth() - 20;

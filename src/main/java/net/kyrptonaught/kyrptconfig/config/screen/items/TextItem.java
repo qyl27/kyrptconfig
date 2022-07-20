@@ -66,7 +66,7 @@ public class TextItem extends ConfigItem<String> {
             this.valueEntry.setWidth(96);
 
         this.valueEntry.y = y + 1;
-        this.valueEntry.x = resetButton.x- (valueEntry.getWidth()) - 7;
+        this.valueEntry.x = resetButton.x - (valueEntry.getWidth()) - 7;
 
         valueEntry.render(matrices, mouseX, mouseY, delta);
     }
