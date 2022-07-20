@@ -24,6 +24,7 @@
 
 package net.kyrptonaught.jankson.impl;
 
+import blue.endless.jankson.Comment;
 import net.kyrptonaught.jankson.*;
 import net.kyrptonaught.jankson.annotation.SerializedName;
 import net.kyrptonaught.jankson.annotation.Serializer;

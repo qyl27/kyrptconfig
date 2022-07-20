@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.kyrptonaught.jankson;
+package blue.endless.jankson;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
