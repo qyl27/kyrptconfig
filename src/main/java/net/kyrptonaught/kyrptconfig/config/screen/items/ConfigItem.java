@@ -2,10 +2,12 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Language;
+import net.minecraft.util.math.ColorHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +93,15 @@ public abstract class ConfigItem<T> {
 
     public int getSize() {
         if (isHidden) return 0;
+        return getHeaderSize() + getContentSize();
+    }
+
+    public int getHeaderSize() {
         return 20;
+    }
+
+    public int getContentSize() {
+        return 0;
     }
 
     public void useDefaultResetBTN() {
@@ -133,10 +143,16 @@ public abstract class ConfigItem<T> {
 
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         if (isHidden) return;
+
+        int width = MinecraftClient.getInstance().getWindow().getScaledWidth();
+        int height = y + getHeaderSize();
+        if (mouseY > y && mouseY < height)
+            DrawableHelper.fill(matrices, 0, y - 1, width, height + 1, ColorHelper.Argb.getArgb(255, 55, 55, 55));
+
         MinecraftClient.getInstance().textRenderer.draw(matrices, this.fieldTitle, x, y + 5, 16777215);
         if (resetButton != null) {
             this.resetButton.y = y;
-            this.resetButton.x = MinecraftClient.getInstance().getWindow().getScaledWidth() - resetButton.getWidth() - 20;
+            this.resetButton.x = width - resetButton.getWidth() - 20;
             resetButton.active = !isValueDefault();
             resetButton.render(matrices, mouseX, mouseY, delta);
         }
@@ -150,6 +166,7 @@ public abstract class ConfigItem<T> {
     }
 
     public void renderToolTip(MatrixStack matrices, int x, int y) {
+        // MinecraftClient.getInstance().textRenderer.wrapLines()
         if (toolTipText != null)
             MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, toolTipText, x, y);
         else if (requiresRestart) {

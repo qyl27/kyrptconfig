@@ -85,16 +85,16 @@ public class SubItem<E> extends ConfigItem<E> {
         return false;
     }
 
-    public int getSize() {
+    public int getContentSize() {
         if (expanded && !isHidden()) {
-            int size = 20;
+            int size = 0;
             for (ConfigItem<?> item : configs) {
                 if (item.isHidden()) continue;
                 size += item.getSize() + 3;
             }
             return size;
         }
-        return 20;
+        return 0;
     }
 
     public void clearConfigItems() {

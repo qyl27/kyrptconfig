@@ -12,7 +12,7 @@ public class TextItem extends ConfigItem<String> {
     public TextItem(Text name, String value, String defaultValue) {
         super(name, value, defaultValue);
         useDefaultResetBTN();
-        valueEntry = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 96, 17, Text.literal("Text Entry"));
+        valueEntry = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 96, 18, Text.literal("Text Entry"));
         setMaxLength(256);
         valueEntry.setText(value);
         valueEntry.setChangedListener(this::setValue);
@@ -59,8 +59,14 @@ public class TextItem extends ConfigItem<String> {
     @Override
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         super.render(matrices, x, y, mouseX, mouseY, delta);
-        this.valueEntry.y = y + 2;
-        this.valueEntry.x = resetButton.x - resetButton.getWidth() - (valueEntry.getWidth() / 2) - 20;
+
+        if (valueEntry.isFocused())
+            this.valueEntry.setWidth(150);
+        else
+            this.valueEntry.setWidth(96);
+
+        this.valueEntry.y = y + 1;
+        this.valueEntry.x = resetButton.x- (valueEntry.getWidth()) - 7;
 
         valueEntry.render(matrices, mouseX, mouseY, delta);
     }

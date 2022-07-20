@@ -14,7 +14,7 @@ public class ListStringEntry extends ConfigItem<String> {
 
     public ListStringEntry(String value) {
         super(Text.literal(""), value, value);
-        valueEntry = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 96, 17, Text.literal("Text Entry"));
+        valueEntry = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 125, 18, Text.literal("Text Entry"));
         valueEntry.setMaxLength(256);
         valueEntry.setText(value);
         this.delButton = new NotSuckyButton(0, 0, 35, 20, Text.translatable("key.kyrptconfig.config.delete"), widget -> {
@@ -39,9 +39,9 @@ public class ListStringEntry extends ConfigItem<String> {
     }
 
     @Override
-    public int getSize() {
-        if (deleted) return -3;
-        return super.getSize();
+    public int getContentSize() {
+        if (deleted) return -23;
+        return super.getContentSize();
     }
 
     @Override
@@ -73,8 +73,13 @@ public class ListStringEntry extends ConfigItem<String> {
         this.delButton.x = MinecraftClient.getInstance().getWindow().getScaledWidth() - delButton.getWidth() - 20;
         this.delButton.render(matrices, mouseX, mouseY, delta);
 
-        this.valueEntry.y = y + 2;
-        this.valueEntry.x = delButton.x - delButton.getWidth() - (valueEntry.getWidth() / 2) - 20;
+        if (valueEntry.isFocused())
+            this.valueEntry.setWidth(175);
+        else
+            this.valueEntry.setWidth(125);
+
+        this.valueEntry.y = y + 1;
+        this.valueEntry.x = delButton.x- (valueEntry.getWidth()) - 7;
         this.valueEntry.render(matrices, mouseX, mouseY, delta);
     }
 }

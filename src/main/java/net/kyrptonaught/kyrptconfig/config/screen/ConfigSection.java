@@ -4,6 +4,7 @@ import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ConfigSection extends Screen {
 
     Text title;
-    public List<ConfigItem> configs = new CopyOnWriteArrayList<>();
+    public List<ConfigItem<?>> configs = new CopyOnWriteArrayList<>();
     public NotSuckyButton sectionSelectionBTN;
     int selectionIndex = 0;
     int scrollOffset = 0;
