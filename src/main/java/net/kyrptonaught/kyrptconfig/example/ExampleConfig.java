@@ -22,6 +22,9 @@ public class ExampleConfig implements ModMenuApi {
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
 
         return (screen) -> {
+            if (!FabricLoader.getInstance().isDevelopmentEnvironment())
+                return null;
+
             // regex replace (\.setSaveConsumer\()([\S\h])*val\) & (options\.)([^\,])+
             ConfigScreen configScreen = new ConfigScreen(screen, Text.translatable("key.kyrptconfig.exampleconfig"));
 
@@ -57,9 +60,8 @@ public class ExampleConfig implements ModMenuApi {
 
             blackListSection.addConfigItem(hideList);
             blackListSection.addConfigItem(nosortList);
-            if (FabricLoader.getInstance().isDevelopmentEnvironment())
-                return configScreen;
-            return null;
+
+            return configScreen;
         };
     }
 }

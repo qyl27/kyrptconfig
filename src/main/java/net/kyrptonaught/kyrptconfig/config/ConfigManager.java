@@ -1,5 +1,6 @@
 package net.kyrptonaught.kyrptconfig.config;
 
+import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.kyrptonaught.jankson.Jankson;
 
@@ -9,7 +10,8 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 public class ConfigManager {
-    protected Jankson JANKSON;
+    protected JsonLoader JANKSON;
+    protected JsonLoader Gson;
     protected final HashMap<String, ConfigStorage> configs = new HashMap<>();
     protected Path dir;
     protected String MOD_ID;
@@ -17,9 +19,21 @@ public class ConfigManager {
     private ConfigManager(String mod_id) {
         this.MOD_ID = mod_id;
         dir = FabricLoader.getInstance().getConfigDir();
+        buildJankson();
+    }
 
+    public void buildJankson() {
+        JANKSON = new JanksonJsonLoader();
         Jankson.Builder builder = CustomJankson.customJanksonBuilder();
-        JANKSON = builder.build();
+        setJANKSON(builder.build());
+    }
+
+    public void buildGson() {
+        Gson = new GsonJsonLoader();
+        ((GsonJsonLoader) Gson).provideGson(new GsonBuilder()
+                .setPrettyPrinting()
+                .setLenient()
+                .create());
     }
 
     public AbstractConfigFile getConfig(String name) {
@@ -33,21 +47,35 @@ public class ConfigManager {
     }
 
     public void registerFile(String name, AbstractConfigFile defaultConfig) {
+        if (JANKSON == null) buildJankson();
+        registerFile(name, defaultConfig, JANKSON);
+    }
+
+    public void registerGsonFile(String name, AbstractConfigFile defaultConfig) {
+        if (Gson == null) buildGson();
+        registerFile(name, defaultConfig, Gson);
+    }
+
+    public void registerFile(String name, AbstractConfigFile defaultConfig, JsonLoader jsonLoader) {
         if (!name.endsWith(".json5")) name = name + ".json5";
-        configs.put(name, new ConfigStorage(dir.resolve(name), defaultConfig));
+        configs.put(name, new ConfigStorage(dir.resolve(name), defaultConfig, jsonLoader));
     }
 
     public void save() {
-        configs.values().forEach(configStorage -> configStorage.save(MOD_ID, JANKSON));
+        configs.values().forEach(configStorage -> configStorage.save(MOD_ID));
     }
 
     public void load() {
-        configs.values().forEach(configStorage -> configStorage.load(MOD_ID, JANKSON));
+        configs.values().forEach(configStorage -> configStorage.load(MOD_ID));
         save();
     }
 
     public Jankson getJANKSON() {
-        return JANKSON;
+        return ((JanksonJsonLoader) JANKSON).getJankson();
+    }
+
+    public void setJANKSON(Jankson jankson) {
+        ((JanksonJsonLoader) JANKSON).provideJankson(jankson);
     }
 
     @Deprecated
@@ -56,7 +84,7 @@ public class ConfigManager {
         for (CustomSerializer customSerializer : customSerializers) {
             customSerializer.addToBuilder(builder);
         }
-        JANKSON = builder.build();
+        ((JanksonJsonLoader) JANKSON).provideJankson(builder.build());
     }
 
 
@@ -89,13 +117,13 @@ public class ConfigManager {
 
         public void load(String config) {
             if (!config.endsWith(".json5")) config = config + ".json5";
-            this.configs.get(config).load(MOD_ID, JANKSON);
+            this.configs.get(config).load(MOD_ID);
             save(config);
         }
 
         public void save(String config) {
             if (!config.endsWith(".json5")) config = config + ".json5";
-            this.configs.get(config).save(MOD_ID, JANKSON);
+            this.configs.get(config).save(MOD_ID);
         }
     }
 }

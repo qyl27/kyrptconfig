@@ -1,8 +1,5 @@
 package net.kyrptonaught.kyrptconfig.config;
 
-import net.kyrptonaught.jankson.Jankson;
-import net.kyrptonaught.jankson.JsonObject;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -15,22 +12,25 @@ public class ConfigStorage {
     private final Path saveFile;
     public AbstractConfigFile config;
     private final AbstractConfigFile defaultConfig;
+    private final JsonLoader jsonLoader;
 
-    public ConfigStorage(Path fileName, AbstractConfigFile defaultConfig) {
+    public ConfigStorage(Path fileName, AbstractConfigFile defaultConfig, JsonLoader jsonLoader) {
         this.saveFile = fileName;
         this.defaultConfig = defaultConfig;
+        this.jsonLoader = jsonLoader;
     }
 
-    public void save(String MOD_ID, Jankson JANKSON) {
+    public void save(String MOD_ID) {
         try (OutputStream os = Files.newOutputStream(saveFile); OutputStreamWriter out = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
-            String json = JANKSON.toJson(config).toJson(true, true);
+            String json = jsonLoader.toString(config);
             out.write(json);
         } catch (Exception e) {
             System.out.println(getConfigName(MOD_ID, "Failed to save #CONFIG"));
+            e.printStackTrace();
         }
     }
 
-    public AbstractConfigFile load(String MOD_ID, Jankson JANKSON) {
+    public AbstractConfigFile load(String MOD_ID) {
         if (!Files.exists(saveFile) || !Files.isReadable(saveFile)) {
             System.out.println(getConfigName(MOD_ID, "Unable to find #CONFIG! Creating a default config"));
             config = defaultConfig;
@@ -39,12 +39,10 @@ public class ConfigStorage {
 
         boolean failed = false;
         try (InputStream in = Files.newInputStream(saveFile, StandardOpenOption.READ)) {
-            JsonObject configJson = JANKSON.load(in);
-            String regularized = configJson.toJson(false, false, 0);
-
-            config = JANKSON.fromJson(regularized, defaultConfig.getClass());
+            config = jsonLoader.loadFromInputStream(in, defaultConfig.getClass());
         } catch (Exception e) {
             failed = true;
+            e.printStackTrace();
         }
         if (failed || (config == null)) {
             System.out.println(getConfigName(MOD_ID, "Failed to load #CONFIG! Overwriting with default config"));
