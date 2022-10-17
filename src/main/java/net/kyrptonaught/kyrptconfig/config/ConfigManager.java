@@ -1,5 +1,6 @@
 package net.kyrptonaught.kyrptconfig.config;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.kyrptonaught.jankson.Jankson;
@@ -68,6 +69,11 @@ public class ConfigManager {
     public void load() {
         configs.values().forEach(configStorage -> configStorage.load(MOD_ID));
         save();
+    }
+
+    public com.google.gson.Gson getGSON() {
+        if (Gson == null) buildGson();
+        return ((GsonJsonLoader) Gson).getGson();
     }
 
     public Jankson getJANKSON() {
