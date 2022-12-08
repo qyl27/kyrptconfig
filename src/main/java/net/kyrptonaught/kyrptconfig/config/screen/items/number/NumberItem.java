@@ -71,8 +71,8 @@ public class NumberItem<T extends Number> extends ConfigItem<T> {
     @Override
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         super.render(matrices, x, y, mouseX, mouseY, delta);
-        this.valueEntry.y = y + 2;
-        this.valueEntry.x = resetButton.x - resetButton.getWidth() - (valueEntry.getWidth() / 2) - 20;
+        this.valueEntry.setY(y + 2);
+        this.valueEntry.setX(resetButton.getX() - resetButton.getWidth() - (valueEntry.getWidth() / 2) - 20);
 
         valueEntry.render(matrices, mouseX, mouseY, delta);
     }

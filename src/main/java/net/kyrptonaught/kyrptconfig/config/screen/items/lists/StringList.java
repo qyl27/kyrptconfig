@@ -92,11 +92,11 @@ public class StringList extends SubItem<List<String>> {
         MinecraftClient.getInstance().textRenderer.draw(matrices, expanded ? "-" : "+", x - 10, y + 5, 16777215);
         subStart = y;
         if (expanded) {
-            this.clearButton.y = y;
-            this.clearButton.x = resetButton.x - (clearButton.getWidth() / 2) - 20;
+            this.clearButton.setY(y);
+            this.clearButton.setX(resetButton.getX() - (clearButton.getWidth() / 2) - 20);
             this.clearButton.render(matrices, mouseX, mouseY, delta);
-            this.addButton.y = y;
-            this.addButton.x = clearButton.x - (addButton.getWidth() / 2) - 20;
+            this.addButton.setY(y);
+            this.addButton.setX(clearButton.getX() - (addButton.getWidth() / 2) - 20);
             this.addButton.render(matrices, mouseX, mouseY, delta);
             int runningY = subStart + 23;
             for (ConfigItem<?> item : configs) {

@@ -27,8 +27,8 @@ public class ButtonItem extends ConfigItem {
     @Override
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         super.render(matrices, x, y, mouseX, mouseY, delta);
-        this.button.y = y;
-        this.button.x = MinecraftClient.getInstance().getWindow().getScaledWidth() - button.getWidth() - 40;
+        this.button.setY(y);
+        this.button.setX(MinecraftClient.getInstance().getWindow().getScaledWidth() - button.getWidth() - 40);
 
         button.render(matrices, mouseX, mouseY, delta);
     }

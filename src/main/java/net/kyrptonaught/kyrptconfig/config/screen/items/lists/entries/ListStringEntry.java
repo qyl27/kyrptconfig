@@ -69,8 +69,8 @@ public class ListStringEntry extends ConfigItem<String> {
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         if (deleted) return;
         super.render(matrices, x, y, mouseX, mouseY, delta);
-        this.delButton.y = y;
-        this.delButton.x = MinecraftClient.getInstance().getWindow().getScaledWidth() - delButton.getWidth() - 20;
+        this.delButton.setY(y);
+        this.delButton.setX(MinecraftClient.getInstance().getWindow().getScaledWidth() - delButton.getWidth() - 20);
         this.delButton.render(matrices, mouseX, mouseY, delta);
 
         if (valueEntry.isFocused())
@@ -78,8 +78,8 @@ public class ListStringEntry extends ConfigItem<String> {
         else
             this.valueEntry.setWidth(125);
 
-        this.valueEntry.y = y + 1;
-        this.valueEntry.x = delButton.x - (valueEntry.getWidth()) - 7;
+        this.valueEntry.setY(y + 1);
+        this.valueEntry.setX(delButton.getX() - (valueEntry.getWidth()) - 7);
         this.valueEntry.render(matrices, mouseX, mouseY, delta);
     }
 }

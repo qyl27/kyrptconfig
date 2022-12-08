@@ -151,8 +151,8 @@ public abstract class ConfigItem<T> {
 
         MinecraftClient.getInstance().textRenderer.draw(matrices, this.fieldTitle, x, y + 6, 16777215);
         if (resetButton != null) {
-            this.resetButton.y = y;
-            this.resetButton.x = width - resetButton.getWidth() - 20;
+            this.resetButton.setY(y);
+            this.resetButton.setX(width - resetButton.getWidth() - 20);
             resetButton.active = !isValueDefault();
             resetButton.render(matrices, mouseX, mouseY, delta);
         }

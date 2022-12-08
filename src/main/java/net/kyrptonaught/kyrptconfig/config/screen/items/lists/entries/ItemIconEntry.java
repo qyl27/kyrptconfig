@@ -5,9 +5,9 @@ import net.kyrptonaught.kyrptconfig.TagHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
-import net.minecraft.util.registry.Registry;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class ItemIconEntry extends IconEntry<Item> {
             }
             if (entered.startsWith("#"))
                 return Items.BARRIER;
-            return Registry.ITEM.getOrEmpty(new Identifier(entered)).orElse(Items.BARRIER);
+            return Registries.ITEM.getOrEmpty(new Identifier(entered)).orElse(Items.BARRIER);
         } catch (InvalidIdentifierException ignored) {
         }
         return Items.BARRIER;

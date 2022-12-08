@@ -47,8 +47,8 @@ public class EnumItem<T extends Enum<?>> extends ConfigItem<T> {
     @Override
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         super.render(matrices, x, y, mouseX, mouseY, delta);
-        this.displayWidget.y = y;
-        this.displayWidget.x = resetButton.x - resetButton.getWidth() - (displayWidget.getWidth() / 2) - 20;
+        this.displayWidget.setY(y);
+        this.displayWidget.setX(resetButton.getX() - resetButton.getWidth() - (displayWidget.getWidth() / 2) - 20);
 
         displayWidget.render(matrices, mouseX, mouseY, delta);
     }

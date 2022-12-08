@@ -52,9 +52,9 @@ public class ConfigScreen extends Screen {
     public void addConfigSection(ConfigSection item) {
         item.selectionIndex = sections.size();
         if (sections.size() == 0)
-            item.sectionSelectionBTN.x = 10;
+            item.sectionSelectionBTN.setX(10);
         else
-            item.sectionSelectionBTN.x = sections.get(sections.size() - 1).sectionSelectionBTN.x + sections.get(sections.size() - 1).sectionSelectionBTN.getWidth() + 3;
+            item.sectionSelectionBTN.setX(sections.get(sections.size() - 1).sectionSelectionBTN.getX() + sections.get(sections.size() - 1).sectionSelectionBTN.getWidth() + 3);
         item.sectionSelectionBTN.setWidth(MinecraftClient.getInstance().textRenderer.getWidth(item.title) + 10);
 
         this.sections.add(item);
@@ -124,7 +124,7 @@ public class ConfigScreen extends Screen {
     public void renderBackgroundTexture(int startY, int size, int vOffset) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
         RenderSystem.setShaderTexture(0, OPTIONS_BACKGROUND_TEXTURE);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
