@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.0-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -25,10 +25,13 @@ dependencies {
 	modImplementation  "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation  "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation ("com.terraformersmc:modmenu:4.0.6"){
+	modImplementation ("com.terraformersmc:modmenu:5.0.2"){
 		transitive(false)
 	}
 
+
+	testImplementation "junit:junit:4.12";
+	compileOnly group: "com.google.code.findbugs", name: "jsr305", version: "3.0.2";
 	//modApi "blue.endless:jankson:+"
 	//include "blue.endless:jankson:+"
 }
