@@ -38,8 +38,8 @@ public class BooleanItem extends ConfigItem<Boolean> {
     @Override
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         super.render(matrices, x, y, mouseX, mouseY, delta);
-        this.boolWidget.y = y;
-        this.boolWidget.x = resetButton.x - resetButton.getWidth() - (boolWidget.getWidth() / 2) - 20;
+        this.boolWidget.setY(y);
+        this.boolWidget.setX(resetButton.getX() - resetButton.getWidth() - (boolWidget.getWidth() / 2) - 20);
 
         boolWidget.render(matrices, mouseX, mouseY, delta);
     }

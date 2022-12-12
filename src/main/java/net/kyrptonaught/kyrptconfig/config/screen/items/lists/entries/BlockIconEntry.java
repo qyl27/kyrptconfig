@@ -5,8 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class BlockIconEntry extends IconEntry<Block> {
             }
             if (entered.startsWith("#"))
                 return Items.BARRIER;
-            return Registry.BLOCK.getOrEmpty(new Identifier(entered)).orElse(Blocks.BARRIER);
+            return Registries.BLOCK.getOrEmpty(new Identifier(entered)).orElse(Blocks.BARRIER);
         } catch (Exception ignored) {
         }
         return Items.BARRIER;

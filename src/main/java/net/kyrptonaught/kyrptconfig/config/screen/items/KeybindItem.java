@@ -65,9 +65,9 @@ public class KeybindItem extends ConfigItem<String> {
     @Override
     public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
         super.render(matrices, x, y, mouseX, mouseY, delta);
-        this.keyButton.y = y;
+        this.keyButton.setY(y);
 
-        this.keyButton.x = resetButton.x - resetButton.getWidth() - (keyButton.getWidth() / 2) - 20;
+        this.keyButton.setX(resetButton.getX() - resetButton.getWidth() - (keyButton.getWidth() / 2) - 20);
 
         keyButton.render(matrices, mouseX, mouseY, delta);
     }
