@@ -102,7 +102,7 @@ public class ConfigScreen extends Screen {
         matrices.push();
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
-        renderBackgroundTexture(0);
+        renderBackgroundTexture(matrices);
         fillGradient(matrices, 0, 0, this.width, this.height, -1072689136, -804253680);
 
         sections.get(selectedSection).render(matrices, 55, mouseX, mouseY, delta);
@@ -110,7 +110,7 @@ public class ConfigScreen extends Screen {
         renderBackgroundTexture(0, 55, 0);
         renderBackgroundTexture(this.height - 30, 30, 0);
 
-        drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 13, 0xffffff);
+        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.width / 2, 13, 0xffffff);
         for (int i = 0; i < sections.size(); i++) {
             sections.get(i).sectionSelectionBTN.active = i != selectedSection;
             sections.get(i).sectionSelectionBTN.render(matrices, mouseX, mouseY, delta);
