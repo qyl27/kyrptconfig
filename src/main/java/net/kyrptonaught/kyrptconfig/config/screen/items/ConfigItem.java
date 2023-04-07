@@ -149,7 +149,7 @@ public abstract class ConfigItem<T> {
         if (mouseY > y && mouseY < height)
             DrawableHelper.fill(matrices, 0, y - 1, width, height + 1, ColorHelper.Argb.getArgb(255, 55, 55, 55));
 
-        MinecraftClient.getInstance().textRenderer.draw(matrices, this.fieldTitle, x, y + 6, 16777215);
+        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, this.fieldTitle, x, y + 6, 16777215);
         if (resetButton != null) {
             this.resetButton.setY(y);
             this.resetButton.setX(width - resetButton.getWidth() - 20);
@@ -166,15 +166,14 @@ public abstract class ConfigItem<T> {
     }
 
     public void renderToolTip(MatrixStack matrices, int x, int y) {
-        // MinecraftClient.getInstance().textRenderer.wrapLines()
-        if (toolTipText != null)
+        if (toolTipText != null && requiresRestart) {
+            List<Text> newList = new ArrayList<>(toolTipText);
+            newList.add(Text.translatable("key.kyrptconfig.config.restartRequired"));
+            MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, newList, x, y);
+        } else if (toolTipText != null)
             MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, toolTipText, x, y);
         else if (requiresRestart) {
             MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, Text.translatable("key.kyrptconfig.config.restartRequired"), x, y);
         }
     }
-      /*  maybe save this for later.
-      public ConfigItem(Text name, ConfigWDefaults config, Function<AbstractConfigFile,T> getValue) {
-        this(name, getValue.apply(config), getValue.apply(config.getDefaults()));
-    }*/
 }

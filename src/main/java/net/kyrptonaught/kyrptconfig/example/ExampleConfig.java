@@ -31,7 +31,8 @@ public class ExampleConfig implements ModMenuApi {
             ConfigSection displaySection = new ConfigSection(configScreen, Text.translatable("key.kyrptconfig.exampleconfig.category.display"));
             displaySection.addConfigItem(new BooleanItem(Text.translatable("key.kyrptconfig.exampleconfig.displaysort"), true, true));
             displaySection.addConfigItem(new BooleanItem(Text.translatable("key.kyrptconfig.exampleconfig.seperatebtn"), false, true));
-            displaySection.addConfigItem(new BooleanItem(Text.translatable("key.kyrptconfig.exampleconfig.displaytooltip"), true, true));
+            for (int i = 0; i < 10; i++)
+                displaySection.addConfigItem(new BooleanItem(Text.translatable("key.kyrptconfig.exampleconfig.displaytooltip"), true, true));
 
             ConfigSection logicSection = new ConfigSection(configScreen, Text.translatable("key.kyrptconfig.exampleconfig.category.logic"));
             logicSection.addConfigItem(new BooleanItem(Text.translatable("key.kyrptconfig.exampleconfig.sortplayer"), true, false));

@@ -121,4 +121,18 @@ public class SubItem<E> extends ConfigItem<E> {
             }
         }
     }
+    @Override
+    public void render2(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
+        super.render2(matrices, x, y, mouseX, mouseY, delta);
+        if (isHidden()) return;
+
+        if (expanded) {
+            int runningY = y + 23;
+            for (ConfigItem<?> item : configs) {
+                if (item.isHidden()) continue;
+                item.render2(matrices, 30, runningY, mouseX, mouseY, delta);
+                runningY += item.getSize() + 3;
+            }
+        }
+    }
 }

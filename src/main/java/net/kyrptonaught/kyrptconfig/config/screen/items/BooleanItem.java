@@ -22,10 +22,10 @@ public class BooleanItem extends ConfigItem<Boolean> {
         super.setValue(value);
         if (value) {
             boolWidget.setMessage(Text.translatable("key.kyrptconfig.config.true"));
-            boolWidget.setButtonColor(DyeColor.LIME.getFireworkColor());
+           boolWidget.setButtonColor(DyeColor.LIME.getFireworkColor());
         } else {
             boolWidget.setMessage(Text.translatable("key.kyrptconfig.config.false"));
-            boolWidget.setButtonColor(DyeColor.RED.getFireworkColor());
+            boolWidget.setButtonColor(DyeColor.RED.getSignColor());
         }
     }
 
