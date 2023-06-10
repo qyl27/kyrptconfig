@@ -1,6 +1,5 @@
 package net.kyrptonaught.kyrptconfig.config;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.kyrptonaught.jankson.Jankson;

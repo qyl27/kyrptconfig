@@ -1,7 +1,7 @@
 package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
 public class EnumItem<T extends Enum<?>> extends ConfigItem<T> {
@@ -45,11 +45,11 @@ public class EnumItem<T extends Enum<?>> extends ConfigItem<T> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
-        super.render(matrices, x, y, mouseX, mouseY, delta);
+    public void render(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
+        super.render(context, x, y, mouseX, mouseY, delta);
         this.displayWidget.setY(y);
         this.displayWidget.setX(resetButton.getX() - resetButton.getWidth() - (displayWidget.getWidth() / 2) - 20);
 
-        displayWidget.render(matrices, mouseX, mouseY, delta);
+        displayWidget.render(context, mouseX, mouseY, delta);
     }
 }

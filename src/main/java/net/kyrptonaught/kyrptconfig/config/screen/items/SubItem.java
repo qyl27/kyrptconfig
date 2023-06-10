@@ -1,7 +1,7 @@
 package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -107,30 +107,31 @@ public class SubItem<E> extends ConfigItem<E> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
-        super.render(matrices, x, y, mouseX, mouseY, delta);
+    public void render(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
+        super.render(context, x, y, mouseX, mouseY, delta);
         if (isHidden()) return;
-        MinecraftClient.getInstance().textRenderer.draw(matrices, expanded ? "-" : "+", x - 10, y + 5, 16777215);
+        context.drawText(MinecraftClient.getInstance().textRenderer, expanded ? "-" : "+", x - 10, y + 5, 16777215, false);
         subStart = y;
         if (expanded) {
             int runningY = subStart + 23;
             for (ConfigItem<?> item : configs) {
                 if (item.isHidden()) continue;
-                item.render(matrices, 30, runningY, mouseX, mouseY, delta);
+                item.render(context, 30, runningY, mouseX, mouseY, delta);
                 runningY += item.getSize() + 3;
             }
         }
     }
+
     @Override
-    public void render2(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
-        super.render2(matrices, x, y, mouseX, mouseY, delta);
+    public void render2(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
+        super.render2(context, x, y, mouseX, mouseY, delta);
         if (isHidden()) return;
 
         if (expanded) {
             int runningY = y + 23;
             for (ConfigItem<?> item : configs) {
                 if (item.isHidden()) continue;
-                item.render2(matrices, 30, runningY, mouseX, mouseY, delta);
+                item.render2(context, 30, runningY, mouseX, mouseY, delta);
                 runningY += item.getSize() + 3;
             }
         }

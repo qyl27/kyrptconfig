@@ -3,8 +3,8 @@ package net.kyrptonaught.kyrptconfig.config.screen.items.lists.entries;
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 public class ListStringEntry extends ConfigItem<String> {
@@ -66,12 +66,12 @@ public class ListStringEntry extends ConfigItem<String> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
         if (deleted) return;
-        super.render(matrices, x, y, mouseX, mouseY, delta);
+        super.render(context, x, y, mouseX, mouseY, delta);
         this.delButton.setY(y);
         this.delButton.setX(MinecraftClient.getInstance().getWindow().getScaledWidth() - delButton.getWidth() - 20);
-        this.delButton.render(matrices, mouseX, mouseY, delta);
+        this.delButton.render(context, mouseX, mouseY, delta);
 
         if (valueEntry.isFocused())
             this.valueEntry.setWidth(175);
@@ -80,6 +80,6 @@ public class ListStringEntry extends ConfigItem<String> {
 
         this.valueEntry.setY(y + 1);
         this.valueEntry.setX(delButton.getX() - (valueEntry.getWidth()) - 7);
-        this.valueEntry.render(matrices, mouseX, mouseY, delta);
+        this.valueEntry.render(context, mouseX, mouseY, delta);
     }
 }

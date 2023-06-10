@@ -1,7 +1,7 @@
 package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 
@@ -22,7 +22,7 @@ public class BooleanItem extends ConfigItem<Boolean> {
         super.setValue(value);
         if (value) {
             boolWidget.setMessage(Text.translatable("key.kyrptconfig.config.true"));
-           boolWidget.setButtonColor(DyeColor.LIME.getFireworkColor());
+            boolWidget.setButtonColor(DyeColor.LIME.getFireworkColor());
         } else {
             boolWidget.setMessage(Text.translatable("key.kyrptconfig.config.false"));
             boolWidget.setButtonColor(DyeColor.RED.getSignColor());
@@ -36,11 +36,11 @@ public class BooleanItem extends ConfigItem<Boolean> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
-        super.render(matrices, x, y, mouseX, mouseY, delta);
+    public void render(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
+        super.render(context, x, y, mouseX, mouseY, delta);
         this.boolWidget.setY(y);
         this.boolWidget.setX(resetButton.getX() - resetButton.getWidth() - (boolWidget.getWidth() / 2) - 20);
 
-        boolWidget.render(matrices, mouseX, mouseY, delta);
+        boolWidget.render(context, mouseX, mouseY, delta);
     }
 }

@@ -2,9 +2,8 @@ package net.kyrptonaught.kyrptconfig.config.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.render.*;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -98,41 +97,30 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        matrices.push();
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        context.getMatrices().push();
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
-        renderBackgroundTexture(matrices);
-        fillGradient(matrices, 0, 0, this.width, this.height, -1072689136, -804253680);
 
-        sections.get(selectedSection).render(matrices, 55, mouseX, mouseY, delta);
+        renderBackgroundTexture(context);
+        context.fillGradient(0, 0, this.width, this.height, -1072689136, -804253680);
 
-        renderBackgroundTexture(0, 55, 0);
-        renderBackgroundTexture(this.height - 30, 30, 0);
+        sections.get(selectedSection).render(context, 55, mouseX, mouseY, delta);
 
-        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.width / 2, 13, 0xffffff);
+        context.getMatrices().translate(0, 0, 1000);
+        context.setShaderColor(64 / 255f, 64 / 255f, 64 / 255f, 1);
+        context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0, this.width, 55, 64, 64);
+        context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, this.height - 30, 0, 0, this.width, 30, 64, 64);
+        context.setShaderColor(1, 1, 1, 1);
+
+        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 13, 0xffffff);
         for (int i = 0; i < sections.size(); i++) {
             sections.get(i).sectionSelectionBTN.active = i != selectedSection;
-            sections.get(i).sectionSelectionBTN.render(matrices, mouseX, mouseY, delta);
+            sections.get(i).sectionSelectionBTN.render(context, mouseX, mouseY, delta);
         }
-        sections.get(selectedSection).render2(matrices, 55, mouseX, mouseY, delta);
+        sections.get(selectedSection).render2(context, 55, mouseX, mouseY, delta);
 
-        super.render(matrices, mouseX, mouseY, delta);
-        matrices.pop();
-    }
-
-    public void renderBackgroundTexture(int startY, int size, int vOffset) {
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBuffer();
-        RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
-        RenderSystem.setShaderTexture(0, OPTIONS_BACKGROUND_TEXTURE);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-        bufferBuilder.vertex(0.0D, (double) startY + size, 0).texture(0.0F, (float) size / 32.0F + (float) vOffset).color(64, 64, 64, 255).next();
-        bufferBuilder.vertex(this.width, (double) startY + size, 0).texture((float) this.width / 32.0F, (float) size / 32.0F + (float) vOffset).color(64, 64, 64, 255).next();
-        bufferBuilder.vertex(this.width, startY, 0).texture((float) this.width / 32.0F, (float) vOffset).color(64, 64, 64, 255).next();
-        bufferBuilder.vertex(0.0D, startY, 0).texture(0.0F, (float) vOffset).color(64, 64, 64, 255).next();
-        tessellator.draw();
+        super.render(context, mouseX, mouseY, delta);
+        context.getMatrices().pop();
     }
 }

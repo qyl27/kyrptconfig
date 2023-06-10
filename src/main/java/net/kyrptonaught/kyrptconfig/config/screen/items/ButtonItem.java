@@ -2,7 +2,7 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
 public class ButtonItem extends ConfigItem {
@@ -25,11 +25,11 @@ public class ButtonItem extends ConfigItem {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
-        super.render(matrices, x, y, mouseX, mouseY, delta);
+    public void render(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
+        super.render(context, x, y, mouseX, mouseY, delta);
         this.button.setY(y);
         this.button.setX(MinecraftClient.getInstance().getWindow().getScaledWidth() - button.getWidth() - 40);
 
-        button.render(matrices, mouseX, mouseY, delta);
+        button.render(context, mouseX, mouseY, delta);
     }
 }

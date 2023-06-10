@@ -2,8 +2,7 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Language;
@@ -141,39 +140,41 @@ public abstract class ConfigItem<T> {
         return false;
     }
 
-    public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
         if (isHidden) return;
 
         int width = MinecraftClient.getInstance().getWindow().getScaledWidth();
         int height = y + getHeaderSize();
         if (mouseY > y && mouseY < height)
-            DrawableHelper.fill(matrices, 0, y - 1, width, height + 1, ColorHelper.Argb.getArgb(255, 55, 55, 55));
+            context.fill(0, y - 1, width, height + 1, ColorHelper.Argb.getArgb(255, 55, 55, 55));
 
-        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, this.fieldTitle, x, y + 6, 16777215);
+        context.drawText(MinecraftClient.getInstance().textRenderer, this.fieldTitle, x, y + 6, 16777215, true);
+
         if (resetButton != null) {
             this.resetButton.setY(y);
             this.resetButton.setX(width - resetButton.getWidth() - 20);
             resetButton.active = !isValueDefault();
-            resetButton.render(matrices, mouseX, mouseY, delta);
+            resetButton.render(context, mouseX, mouseY, delta);
         }
+
     }
 
-    public void render2(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
+    public void render2(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
         if (isHidden) return;
         if (mouseX > x && mouseX < x + MinecraftClient.getInstance().textRenderer.getWidth(fieldTitle) &&
                 mouseY > y && mouseY < y + 12)
-            renderToolTip(matrices, mouseX, mouseY);
+            renderToolTip(context, mouseX, mouseY);
     }
 
-    public void renderToolTip(MatrixStack matrices, int x, int y) {
+    public void renderToolTip(DrawContext context, int x, int y) {
         if (toolTipText != null && requiresRestart) {
             List<Text> newList = new ArrayList<>(toolTipText);
             newList.add(Text.translatable("key.kyrptconfig.config.restartRequired"));
-            MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, newList, x, y);
+            context.drawTooltip(MinecraftClient.getInstance().textRenderer, newList, x, y);
         } else if (toolTipText != null)
-            MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, toolTipText, x, y);
+            context.drawTooltip(MinecraftClient.getInstance().textRenderer, toolTipText, x, y);
         else if (requiresRestart) {
-            MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, Text.translatable("key.kyrptconfig.config.restartRequired"), x, y);
+            context.drawTooltip(MinecraftClient.getInstance().textRenderer, Text.translatable("key.kyrptconfig.config.restartRequired"), x, y);
         }
     }
 }

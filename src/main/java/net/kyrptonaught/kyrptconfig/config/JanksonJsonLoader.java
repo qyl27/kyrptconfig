@@ -11,7 +11,7 @@ public class JanksonJsonLoader implements JsonLoader {
         this.jankson = jankson;
     }
 
-    public Jankson getJankson(){
+    public Jankson getJankson() {
         return jankson;
     }
 

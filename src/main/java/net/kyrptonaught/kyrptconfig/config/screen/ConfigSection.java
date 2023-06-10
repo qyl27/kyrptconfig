@@ -1,8 +1,8 @@
 package net.kyrptonaught.kyrptconfig.config.screen;
 
 import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
@@ -100,20 +100,20 @@ public class ConfigSection extends Screen {
         return sectionSize - visibleHeight;
     }
 
-    public void render(MatrixStack matrices, int startY, int mouseX, int mouseY, float delta) {
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext context, int startY, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
         int runningY = scrollOffset + startY + 5;
         for (ConfigItem<?> configItem : configs) {
             // if (runningY + configItem.getSize() > 55 && runningY < 55 + height)
-            configItem.render(matrices, 20, runningY, mouseX, mouseY, delta);
+            configItem.render(context, 20, runningY, mouseX, mouseY, delta);
             runningY += configItem.getSize() + 3;
         }
     }
 
-    public void render2(MatrixStack matrices, int startY, int mouseX, int mouseY, float delta) {
+    public void render2(DrawContext context, int startY, int mouseX, int mouseY, float delta) {
         int runningY = scrollOffset + startY + 5;
         for (ConfigItem<?> configItem : configs) {
-            configItem.render2(matrices, 20, runningY, mouseX, mouseY, delta);
+            configItem.render2(context, 20, runningY, mouseX, mouseY, delta);
             runningY += configItem.getSize() + 3;
         }
     }

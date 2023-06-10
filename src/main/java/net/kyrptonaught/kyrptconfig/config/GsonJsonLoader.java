@@ -13,7 +13,7 @@ public class GsonJsonLoader implements JsonLoader {
         this.gson = gson;
     }
 
-    public Gson getGson(){
+    public Gson getGson() {
         return gson;
     }
 

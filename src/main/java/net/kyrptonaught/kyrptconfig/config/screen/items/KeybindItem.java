@@ -1,9 +1,9 @@
 package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
@@ -63,12 +63,12 @@ public class KeybindItem extends ConfigItem<String> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
-        super.render(matrices, x, y, mouseX, mouseY, delta);
+    public void render(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
+        super.render(context, x, y, mouseX, mouseY, delta);
         this.keyButton.setY(y);
 
         this.keyButton.setX(resetButton.getX() - resetButton.getWidth() - (keyButton.getWidth() / 2) - 20);
 
-        keyButton.render(matrices, mouseX, mouseY, delta);
+        keyButton.render(context, mouseX, mouseY, delta);
     }
 }
