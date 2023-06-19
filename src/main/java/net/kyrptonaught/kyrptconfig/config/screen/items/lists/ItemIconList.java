@@ -27,8 +27,7 @@ public class ItemIconList extends StringList {
             setToolTip(Text.translatable("key.kyrptconfig.config.hastags"),
                     Text.translatable("key.kyrptconfig.config.tagsdisplay"));
         } else {
-            setToolTip(Text.translatable("key.kyrptconfig.config.nothastags"),
-                    Text.translatable("key.kyrptconfig.config.tagsdisplay"));
+            setToolTip(Text.translatable("key.kyrptconfig.config.nothastags"));
         }
     }
 

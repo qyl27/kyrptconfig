@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "kyrptconfig",
-  "version": "1.5.5-1.20",
+  "version": "1.5.6-1.20",
   "name": "Kyrpt Config",
   "description": "Config library used in my mods",
   "authors": [
