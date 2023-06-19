@@ -2,6 +2,7 @@ package net.kyrptonaught.kyrptconfig.config.screen.items;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.MutableText;
@@ -18,10 +19,12 @@ public class KeybindItem extends ConfigItem<String> {
             this.isListening = !this.isListening;
             if (!this.isListening) {
                 widget.setMessage(this.getCleanName(this.value));
+                widget.setTooltip(Tooltip.of(Text.literal(this.value)));
             } else {
                 widget.setMessage(Text.literal("> ").append(this.getCleanName(this.value).append(Text.literal(" <"))));
             }
         });
+        keyButton.setTooltip(Tooltip.of(Text.literal(this.value)));
         useDefaultResetBTN();
     }
 
@@ -29,6 +32,7 @@ public class KeybindItem extends ConfigItem<String> {
         super.setValue(value);
         isListening = false;
         keyButton.setMessage(this.getCleanName(this.value));
+        keyButton.setTooltip(Tooltip.of(Text.literal(this.value)));
     }
 
     public MutableText getCleanName(String str) {

@@ -107,7 +107,7 @@ public class ConfigScreen extends Screen {
 
         sections.get(selectedSection).render(context, 55, mouseX, mouseY, delta);
 
-        context.getMatrices().translate(0, 0, 1000);
+        context.getMatrices().translate(0, 0, 1);
         context.setShaderColor(64 / 255f, 64 / 255f, 64 / 255f, 1);
         context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0, this.width, 55, 64, 64);
         context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, this.height - 30, 0, 0, this.width, 30, 64, 64);

@@ -65,7 +65,7 @@ public class NumberItem<T extends Number> extends ConfigItem<T> {
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
-        valueEntry.mouseClicked(mouseX, mouseY, button);
+        valueEntry.setFocused(valueEntry.mouseClicked(mouseX, mouseY, button));
     }
 
     @Override

@@ -62,7 +62,7 @@ public class ListStringEntry extends ConfigItem<String> {
         super.mouseClicked(mouseX, mouseY, button);
         if (deleted) return;
         delButton.mouseClicked(mouseX, mouseY, button);
-        valueEntry.mouseClicked(mouseX, mouseY, button);
+        valueEntry.setFocused(valueEntry.mouseClicked(mouseX, mouseY, button));
     }
 
     @Override

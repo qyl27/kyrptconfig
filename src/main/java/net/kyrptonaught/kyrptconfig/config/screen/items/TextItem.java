@@ -53,7 +53,7 @@ public class TextItem extends ConfigItem<String> {
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
         super.mouseClicked(mouseX, mouseY, button);
-        valueEntry.mouseClicked(mouseX, mouseY, button);
+        valueEntry.setFocused(valueEntry.mouseClicked(mouseX, mouseY, button));
     }
 
     @Override
