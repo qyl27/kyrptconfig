@@ -11,10 +11,8 @@ public class DoubleItem extends NumberItem<Double> {
 
     @Override
     public void onTyped(String s) {
-        System.out.println(s);
         if (s.isBlank() || s.equals("-") || s.charAt(s.length() - 1) == '.') return;
         String fixed = fixInput(s);
-        System.out.println(s + " " + fixed);
         if (s.equals(fixed))
             value = Double.parseDouble(s);
         else
