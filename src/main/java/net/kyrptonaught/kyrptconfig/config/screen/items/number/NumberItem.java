@@ -3,15 +3,19 @@ package net.kyrptonaught.kyrptconfig.config.screen.items.number;
 import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
+import net.minecraft.util.DyeColor;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
-public class NumberItem<T extends Number> extends ConfigItem<T> {
+public abstract class NumberItem<T extends Number> extends ConfigItem<T> {
 
     protected T min, max;
     TextFieldWidget valueEntry;
+    boolean lastInputFixed = false;
 
     public NumberItem(Text name, T value, T defaultValue) {
         super(name, value, defaultValue);
@@ -24,6 +28,7 @@ public class NumberItem<T extends Number> extends ConfigItem<T> {
     public NumberItem setMinMax(T min, T max) {
         this.min = min;
         this.max = max;
+        valueEntry.setTooltip(Tooltip.of(Text.literal(min + " - " + max)));
         return this;
     }
 
@@ -42,13 +47,47 @@ public class NumberItem<T extends Number> extends ConfigItem<T> {
         return value;
     }
 
-    public void onTyped(String s) {
+    public abstract T parseValue(String value);
 
+    public void onTyped(String s) {
+        boolean isValid = isValid(s);
+        if (isValid) {
+            valueEntry.setEditableColor(0xE0E0E0);
+        } else {
+            valueEntry.setEditableColor(DyeColor.RED.getSignColor());
+        }
+        lastInputFixed = false;
+    }
+
+    public boolean isValid(String s) {
+        try {
+            T parsed = parseValue(s);
+            if (Objects.equals(fixInput(parsed), parsed))
+                return true;
+        } catch (NumberFormatException ignored) {
+
+        }
+        return false;
     }
 
     @Override
     public void tick() {
         valueEntry.tick();
+        if (!valueEntry.isFocused() && !lastInputFixed) {
+            fixLastInput();
+        }
+    }
+
+    @Override
+    public void save() {
+        fixLastInput();
+        super.save();
+    }
+
+    public void fixLastInput() {
+        valueEntry.setText(fixInput(parseValue(valueEntry.getText())).toString());
+        value = parseValue(valueEntry.getText());
+        lastInputFixed = true;
     }
 
     @Override

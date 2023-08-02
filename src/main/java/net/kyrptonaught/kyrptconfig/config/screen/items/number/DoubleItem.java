@@ -2,7 +2,6 @@ package net.kyrptonaught.kyrptconfig.config.screen.items.number;
 
 import net.minecraft.text.Text;
 
-
 public class DoubleItem extends NumberItem<Double> {
     public DoubleItem(Text name, Double value, Double defaultValue) {
         super(name, value, defaultValue);
@@ -10,20 +9,11 @@ public class DoubleItem extends NumberItem<Double> {
     }
 
     @Override
-    public void onTyped(String s) {
-        if (s.isBlank() || s.equals("-") || s.charAt(s.length() - 1) == '.') return;
-        String fixed = fixInput(s);
-        if (s.equals(fixed))
-            value = Double.parseDouble(s);
-        else
-            valueEntry.setText(fixed);
-    }
-
-    public String fixInput(String input) {
+    public Double parseValue(String value) {
         try {
-            return fixInput(Double.parseDouble(input)).toString();
+            return Double.parseDouble(value);
         } catch (NumberFormatException ignored) {
         }
-        return value.toString();
+        return 0d;
     }
 }

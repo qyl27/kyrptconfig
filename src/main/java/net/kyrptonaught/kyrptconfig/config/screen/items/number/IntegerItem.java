@@ -2,7 +2,6 @@ package net.kyrptonaught.kyrptconfig.config.screen.items.number;
 
 import net.minecraft.text.Text;
 
-
 public class IntegerItem extends NumberItem<Integer> {
     public IntegerItem(Text name, int value, int defaultValue) {
         super(name, value, defaultValue);
@@ -10,21 +9,11 @@ public class IntegerItem extends NumberItem<Integer> {
     }
 
     @Override
-    public void onTyped(String s) {
-        if (s.isBlank() || s.equals("-")) return;
-        String fixed = fixInput(s);
-        if (s.equals(fixed))
-            value = Integer.parseInt(fixed);
-        else
-            valueEntry.setText(fixed);
-    }
-
-    public String fixInput(String input) {
+    public Integer parseValue(String value) {
         try {
-            return fixInput(Integer.parseInt(input)).toString();
+            return Integer.parseInt(value);
         } catch (NumberFormatException ignored) {
         }
-
-        return value.toString();
+        return 0;
     }
 }

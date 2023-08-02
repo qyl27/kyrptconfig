@@ -10,6 +10,7 @@ import net.kyrptonaught.kyrptconfig.config.screen.items.ButtonItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.KeybindItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.TextItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.StringList;
+import net.kyrptonaught.kyrptconfig.config.screen.items.number.FloatItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.number.IntegerItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
@@ -33,6 +34,11 @@ public class ExampleConfig implements ModMenuApi {
             displaySection.addConfigItem(new BooleanItem(Text.translatable("key.kyrptconfig.exampleconfig.displaysort"), true, true));
             displaySection.addConfigItem(new IntegerItem(Text.translatable("key.diggusmaximus.config.maxmine"), 40, 40).setMinMax(1, 2048));
             displaySection.addConfigItem(new KeybindItem(Text.translatable("key.inventorysorter.sort"), "key.keyboard.l", "key.keyboard.p"));
+
+            FloatItem armorHudScale = (FloatItem) displaySection.addConfigItem(new FloatItem(Text.translatable("key.lemclienthelper.clientgui.armourscale"), 1f, 1f));
+            armorHudScale.setMinMax(1f, 4f);
+            armorHudScale.setSaveConsumer(value -> System.out.println(value));
+            armorHudScale.setToolTipWithNewLine("key.lemclienthelper.clientgui.armourscale.tooltip");
 
             for (int i = 0; i < 10; i++)
                 displaySection.addConfigItem(new BooleanItem(Text.translatable("key.kyrptconfig.exampleconfig.displaytooltip"), true, true));
