@@ -60,7 +60,7 @@ public class JsonPrimitive extends JsonElement {
      */
     public JsonPrimitive(@Nonnull Object value) {
         if (value instanceof Character) {
-            this.value = "" + value;
+            this.value = String.valueOf(value);
         } else if (value instanceof Long) {
             this.value = value;
         } else if (value instanceof Double) {

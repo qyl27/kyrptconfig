@@ -116,7 +116,7 @@ public final class Escaper {
     }
 
     private static String unicodeEscape(int codePoint) {
-        String codeString = "" + Integer.toHexString(codePoint);
+        String codeString = Integer.toHexString(codePoint);
         while (codeString.length() < 4) codeString = "0" + codeString;
         return "\\u" + codeString;
     }

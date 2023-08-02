@@ -286,8 +286,7 @@ public class JsonObject extends JsonElement implements Map<String, JsonElement> 
 
     @Override
     public boolean equals(Object other) {
-        if (other == null || !(other instanceof JsonObject)) return false;
-        JsonObject otherObject = (JsonObject) other;
+        if (other == null || !(other instanceof JsonObject otherObject)) return false;
         if (entries.size() != otherObject.entries.size()) return false;
 
         //Lists are identical sizes, but if the contents, comments, or ordering are at all different, fail them
@@ -471,13 +470,12 @@ public class JsonObject extends JsonElement implements Map<String, JsonElement> 
 
     private static final class Entry {
         private String comment;
-        protected String key;
-        protected JsonElement value;
+        private String key;
+        private JsonElement value;
 
         @Override
         public boolean equals(Object other) {
-            if (other == null || !(other instanceof Entry)) return false;
-            Entry o = (Entry) other;
+            if (other == null || !(other instanceof Entry o)) return false;
             if (!Objects.equals(comment, o.comment)) return false;
             if (!key.equals(o.key)) return false;
             return value.equals(o.value);

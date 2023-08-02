@@ -151,7 +151,8 @@ public class StringParserContext implements ParserContext<JsonPrimitive> {
             unicodeUs--;
             builder.append("\\");
             for (int i = 0; i < unicodeUs; i++) builder.append('u');
-            while (unicodeSequence.length() < 4) unicodeSequence = "0" + unicodeSequence; //TODO: THIS IS A QUIRK. CONSIDER THROWING INSTEAD
+            while (unicodeSequence.length() < 4)
+                unicodeSequence = "0" + unicodeSequence; //TODO: THIS IS A QUIRK. CONSIDER THROWING INSTEAD
             builder.append(unicodeSequence.toLowerCase(Locale.ROOT));
         } else {
             //we unbox and cast all the way from Long to int because parseInt has some problems with the top bit being set

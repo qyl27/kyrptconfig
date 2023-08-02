@@ -510,8 +510,7 @@ public class JsonArray extends JsonElement implements List<JsonElement>, Iterabl
 
         @Override
         public boolean equals(Object other) {
-            if (!(other instanceof Entry)) return false;
-            Entry o = (Entry) other;
+            if (!(other instanceof Entry o)) return false;
             return Objects.equals(comment, o.comment) &&
                     Objects.equals(value, o.value);
         }

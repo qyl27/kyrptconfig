@@ -92,13 +92,15 @@ public class POJODeserializer {
                     f.set(parent, null);
                     if (!accessible) f.setAccessible(false);
                 } catch (IllegalArgumentException | IllegalAccessException ex) {
-                    if (failFast) throw new DeserializationException("Couldn't set field \"" + f.getName() + "\" of class \"" + parent.getClass().getCanonicalName() + "\"", ex);
+                    if (failFast)
+                        throw new DeserializationException("Couldn't set field \"" + f.getName() + "\" of class \"" + parent.getClass().getCanonicalName() + "\"", ex);
                 }
             } else {
                 try {
                     unpackFieldData(parent, f, elem, source.getMarshaller());
                 } catch (Throwable t) {
-                    if (failFast) throw new DeserializationException("There was a problem unpacking field " + f.getName() + " of class " + parent.getClass().getCanonicalName(), t);
+                    if (failFast)
+                        throw new DeserializationException("There was a problem unpacking field " + f.getName() + " of class " + parent.getClass().getCanonicalName(), t);
                 }
             }
         }
@@ -111,7 +113,8 @@ public class POJODeserializer {
     @Nullable
     public static Object unpack(Type t, JsonElement elem, Marshaller marshaller) {
         Class<?> rawClass = TypeMagic.classForType(t);
-        if (rawClass.isPrimitive()) return null; //We can't unpack a primitive into an object of primitive type. Maybe in the future we can return a boxed type?
+        if (rawClass.isPrimitive())
+            return null; //We can't unpack a primitive into an object of primitive type. Maybe in the future we can return a boxed type?
 
         if (elem == null) return null;
 		/*
@@ -214,11 +217,11 @@ public class POJODeserializer {
     }
 
     public static void unpackMap(Map<Object, Object> map, Type keyType, Type valueType, JsonElement elem, Marshaller marshaller) throws DeserializationException {
-        if (!(elem instanceof JsonObject)) throw new DeserializationException("Cannot deserialize a " + elem.getClass().getSimpleName() + " into a Map - expected a JsonObject!");
+        if (!(elem instanceof JsonObject object))
+            throw new DeserializationException("Cannot deserialize a " + elem.getClass().getSimpleName() + " into a Map - expected a JsonObject!");
 
         //Class<?> keyClass = TypeMagic.classForType(keyType);
         //Class<?> valueClass = TypeMagic.classForType(valueType);
-        JsonObject object = (JsonObject) elem;
         for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
             try {
                 Object k = marshaller.marshall(keyType, new JsonPrimitive(entry.getKey()));
@@ -230,9 +233,9 @@ public class POJODeserializer {
     }
 
     public static void unpackCollection(Collection<Object> collection, Type elementType, JsonElement elem, Marshaller marshaller) throws DeserializationException {
-        if (!(elem instanceof JsonArray)) throw new DeserializationException("Cannot deserialize a " + elem.getClass().getSimpleName() + " into a Set - expected a JsonArray!");
+        if (!(elem instanceof JsonArray array))
+            throw new DeserializationException("Cannot deserialize a " + elem.getClass().getSimpleName() + " into a Set - expected a JsonArray!");
 
-        JsonArray array = (JsonArray) elem;
         for (JsonElement arrayElem : array) {
 
             Object o = marshaller.marshall(elementType, arrayElem);

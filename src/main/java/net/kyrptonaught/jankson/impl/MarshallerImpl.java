@@ -121,7 +121,7 @@ public class MarshallerImpl implements Marshaller {
 
 
         registerSerializer(Void.class, (it) -> JsonNull.INSTANCE);
-        registerSerializer(Character.class, (it) -> new JsonPrimitive("" + it));
+        registerSerializer(Character.class, (it) -> new JsonPrimitive(String.valueOf(it)));
         registerSerializer(String.class, JsonPrimitive::new);
         registerSerializer(Byte.class, (it) -> new JsonPrimitive(Long.valueOf(it)));
         registerSerializer(Short.class, (it) -> new JsonPrimitive(Long.valueOf(it)));
@@ -132,7 +132,7 @@ public class MarshallerImpl implements Marshaller {
         registerSerializer(Boolean.class, JsonPrimitive::new);
 
         registerSerializer(Void.TYPE, (it) -> JsonNull.INSTANCE);
-        registerSerializer(Character.TYPE, (it) -> new JsonPrimitive("" + it));
+        registerSerializer(Character.TYPE, (it) -> new JsonPrimitive(String.valueOf(it)));
         registerSerializer(Byte.TYPE, (it) -> new JsonPrimitive(Long.valueOf(it)));
         registerSerializer(Short.TYPE, (it) -> new JsonPrimitive(Long.valueOf(it)));
         registerSerializer(Integer.TYPE, (it) -> new JsonPrimitive(Long.valueOf(it)));
@@ -233,7 +233,8 @@ public class MarshallerImpl implements Marshaller {
             }
             if (elem instanceof JsonNull) return (T) "null";
 
-            if (failFast) throw new DeserializationException("Encountered unexpected JsonElement type while deserializing to string: " + elem.getClass().getCanonicalName());
+            if (failFast)
+                throw new DeserializationException("Encountered unexpected JsonElement type while deserializing to string: " + elem.getClass().getCanonicalName());
             return null;
         }
 
@@ -242,19 +243,20 @@ public class MarshallerImpl implements Marshaller {
             if (func != null) {
                 return (T) func.apply(((JsonPrimitive) elem).getValue());
             } else {
-                if (failFast) throw new DeserializationException("Don't know how to unpack value '" + elem + "' into target type '" + clazz.getCanonicalName() + "'");
+                if (failFast)
+                    throw new DeserializationException("Don't know how to unpack value '" + elem + "' into target type '" + clazz.getCanonicalName() + "'");
                 return null;
             }
-        } else if (elem instanceof JsonObject) {
+        } else if (elem instanceof JsonObject obj) {
 
 
-            if (clazz.isPrimitive()) throw new DeserializationException("Can't marshall json object into primitive type " + clazz.getCanonicalName());
+            if (clazz.isPrimitive())
+                throw new DeserializationException("Can't marshall json object into primitive type " + clazz.getCanonicalName());
             if (JsonPrimitive.class.isAssignableFrom(clazz)) {
                 if (failFast) throw new DeserializationException("Can't marshall json object into a json primitive");
                 return null;
             }
 
-            JsonObject obj = (JsonObject) elem;
             obj.setMarshaller(this);
 
             if (typeAdapters.containsKey(clazz)) {

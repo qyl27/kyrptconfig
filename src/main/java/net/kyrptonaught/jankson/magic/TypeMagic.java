@@ -97,8 +97,7 @@ public class TypeMagic {
 			return classForType(types[0]);*/
         }
 
-        if (t instanceof GenericArrayType) {
-            GenericArrayType arrayType = (GenericArrayType) t;
+        if (t instanceof GenericArrayType arrayType) {
             /* ComponentClass will in practice return a TypeVariable, which will resolve to Object.
              * This is actually okay, because *any time* you try and create a T[], you'll wind up making an Object[]
              * instead and stuffing it into the T[]. And then it'll work.

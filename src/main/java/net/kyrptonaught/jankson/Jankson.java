@@ -319,7 +319,8 @@ public class Jankson {
 
     private void processCodePoint(int codePoint) throws SyntaxError {
         ParserFrame<?> frame = contextStack.peek();
-        if (frame == null) throw new IllegalStateException("Parser problem! The ParserContext stack underflowed! (line " + line + ", col " + column + ")");
+        if (frame == null)
+            throw new IllegalStateException("Parser problem! The ParserContext stack underflowed! (line " + line + ", col " + column + ")");
 
         //Do a limited amount of tail call recursion
         try {

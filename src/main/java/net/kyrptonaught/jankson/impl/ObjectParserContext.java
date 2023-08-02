@@ -83,7 +83,8 @@ public class ObjectParserContext implements ParserContext<JsonObject> {
             //Expecting: Key or End
             switch (codePoint) {
                 case '}':
-                    if (noOpenBrace) throw new SyntaxError("Found spurious '}' while parsing an object with no open brace.");
+                    if (noOpenBrace)
+                        throw new SyntaxError("Found spurious '}' while parsing an object with no open brace.");
                     closeBraceFound = true;
                     return true;
                 case ',':
