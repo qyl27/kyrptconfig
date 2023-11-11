@@ -72,7 +72,6 @@ public abstract class NumberItem<T extends Number> extends ConfigItem<T> {
 
     @Override
     public void tick() {
-        valueEntry.tick();
         if (!valueEntry.isFocused() && !lastInputFixed) {
             fixLastInput();
         }

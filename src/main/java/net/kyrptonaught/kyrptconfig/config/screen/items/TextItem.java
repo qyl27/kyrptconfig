@@ -35,11 +35,6 @@ public class TextItem extends ConfigItem<String> {
     }
 
     @Override
-    public void tick() {
-        valueEntry.tick();
-    }
-
-    @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         super.keyPressed(keyCode, scanCode, modifiers);
         return valueEntry.keyPressed(keyCode, scanCode, modifiers);

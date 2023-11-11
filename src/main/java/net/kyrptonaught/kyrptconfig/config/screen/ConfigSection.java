@@ -83,13 +83,13 @@ public class ConfigSection extends Screen {
         for (ConfigItem<?> configItem : configs) {
             configItem.mouseClicked(mouseX, mouseY, button);
         }
-        mouseScrolled(mouseX, mouseY, 0); // update scroll if option changes screen size
+        mouseScrolled(mouseX, mouseY, 0,0); // update scroll if option changes screen size
         return false;
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-        scrollOffset = MathHelper.clamp(scrollOffset + (int) (amount * 15), -calculateSectionHeight(), 0);
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        scrollOffset = MathHelper.clamp(scrollOffset + (int) (verticalAmount * 15), -calculateSectionHeight(), 0);
         return true;
     }
 
@@ -116,5 +116,9 @@ public class ConfigSection extends Screen {
             configItem.render2(context, 20, runningY, mouseX, mouseY, delta);
             runningY += configItem.getSize() + 3;
         }
+    }
+
+    @Override
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
     }
 }

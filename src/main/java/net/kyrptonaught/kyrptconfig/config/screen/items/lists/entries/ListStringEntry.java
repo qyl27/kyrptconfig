@@ -34,11 +34,6 @@ public class ListStringEntry extends ConfigItem<String> {
     }
 
     @Override
-    public void tick() {
-        valueEntry.tick();
-    }
-
-    @Override
     public int getContentSize() {
         if (deleted) return -23;
         return super.getContentSize();
