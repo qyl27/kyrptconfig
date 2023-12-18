@@ -37,7 +37,7 @@ public class ExampleConfig implements ModMenuApi {
 
             FloatItem armorHudScale = (FloatItem) displaySection.addConfigItem(new FloatItem(Text.translatable("key.lemclienthelper.clientgui.armourscale"), 1f, 1f));
             armorHudScale.setMinMax(1f, 4f);
-            armorHudScale.setSaveConsumer(value -> System.out.println(value));
+            armorHudScale.setSaveConsumer(System.out::println);
             armorHudScale.setToolTipWithNewLine("key.lemclienthelper.clientgui.armourscale.tooltip");
 
             for (int i = 0; i < 10; i++)
@@ -54,7 +54,7 @@ public class ExampleConfig implements ModMenuApi {
             StringList hideList = (StringList) new StringList(Text.translatable("key.kyrptconfig.exampleconfig.hidesort"), new ArrayList<>(), new ArrayList<>()).setToolTipWithNewLine("key.kyrptconfig.exampleconfig.hidetooltip");
 
             blackListSection.addConfigItem(new ButtonItem(Text.translatable("key.kyrptconfig.exampleconfig.downloadListButton")).setClickEvent(() -> {
-                SystemToast.add(MinecraftClient.getInstance().getToastManager(), SystemToast.Type.TUTORIAL_HINT, Text.translatable("key.inventorysorter.toast.error"), Text.translatable("key.inventorysorter.toast.error2"));
+                SystemToast.add(MinecraftClient.getInstance().getToastManager(), SystemToast.Type.NARRATOR_TOGGLE, Text.translatable("key.inventorysorter.toast.error"), Text.translatable("key.inventorysorter.toast.error2"));
             }));
 
             blackListSection.addConfigItem(hideList);
