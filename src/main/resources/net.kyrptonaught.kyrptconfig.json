@@ -5,7 +5,8 @@
   "client": [
     "displaykeybind.GameOptionsMixin",
     "displaykeybind.GameOptions$VisitorMixin",
-    "nonConflicting.ControlListWidgetMixin"
+    "nonConflicting.ControlListWidgetMixin",
+    "nonConflicting.KeyBindingMixin"
   ],
   "injectors": {
     "defaultRequire": 1
