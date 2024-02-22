@@ -59,15 +59,31 @@ publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			artifactId archivesBaseName
+			version = 'true'.equalsIgnoreCase(System.getenv('MOD_RELEASE')) ? version : "${version}-SNAPSHOT"
 			from components.java
 		}
 	}
 	repositories {
+//		maven {
+//			url ='s3://maven.kyrptonaught.dev'
+//			credentials(AwsCredentials) {
+//				accessKey = System.getenv('maven-key-id')
+//				secretKey = System.getenv('maven-key')
+//			}
+//		}
+		mavenLocal()
+
 		maven {
-			url ='s3://maven.kyrptonaught.dev'
-			credentials(AwsCredentials) {
-				accessKey = System.getenv('maven-key-id')
-				secretKey = System.getenv('maven-key')
+			name = 'YuluoMaven'
+
+			def ENV = System.getenv()
+			def releaseUrl = 'https://maven.yuluo.dev/repository/maven-releases/'
+			def snapshotUrl = 'https://maven.yuluo.dev/repository/maven-snapshots/'
+			url = ENV.MOD_RELEASE ? releaseUrl : snapshotUrl
+
+			credentials {
+				username ENV.MOD_MAVEN_USER
+				password ENV.MOD_MAVEN_PASS
 			}
 		}
 	}
