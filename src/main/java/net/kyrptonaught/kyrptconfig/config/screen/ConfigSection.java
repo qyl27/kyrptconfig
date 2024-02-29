@@ -108,6 +108,7 @@ public class ConfigSection extends Screen {
             configItem.render(context, 20, runningY, mouseX, mouseY, delta);
             runningY += configItem.getSize() + 3;
         }
+
     }
 
     public void render2(DrawContext context, int startY, int mouseX, int mouseY, float delta) {

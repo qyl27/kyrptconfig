@@ -40,7 +40,7 @@ public class ExampleConfig implements ModMenuApi {
             armorHudScale.setSaveConsumer(System.out::println);
             armorHudScale.setToolTipWithNewLine("key.lemclienthelper.clientgui.armourscale.tooltip");
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)
                 displaySection.addConfigItem(new BooleanItem(Text.translatable("key.kyrptconfig.exampleconfig.displaytooltip"), true, true));
 
             ConfigSection blackListSection = new ConfigSection(configScreen, Text.translatable("Blacklist"));
@@ -59,12 +59,12 @@ public class ExampleConfig implements ModMenuApi {
 
             blackListSection.addConfigItem(hideList);
 
-            new ConfigSection(configScreen, Text.translatable("Tab Test 1"));
-            new ConfigSection(configScreen, Text.translatable("Tab Test 2"));
-            new ConfigSection(configScreen, Text.translatable("Tab Test 3"));
-            new ConfigSection(configScreen, Text.translatable("Tab Test 4"));
-            new ConfigSection(configScreen, Text.translatable("Tab Test 5"));
-            new ConfigSection(configScreen, Text.translatable("Tab Test 6"));
+            new ConfigSection(configScreen, Text.literal("Tab Test 1"));
+            new ConfigSection(configScreen, Text.literal("Tab Test 2"));
+            new ConfigSection(configScreen, Text.literal("Tab Test 3"));
+            new ConfigSection(configScreen, Text.literal("Tab Test 4"));
+            new ConfigSection(configScreen, Text.literal("Tab Test 5"));
+            new ConfigSection(configScreen, Text.literal("Tab Test 6"));
             return configScreen;
         };
     }

@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 
 public class NotSuckyButton extends ButtonWidget {
     int buttonColor = 16777215;
+    public boolean disableHover = false;
     private static final ButtonTextures TEXTURES = new ButtonTextures(new Identifier("widget/button"), new Identifier("widget/button_disabled"), new Identifier("widget/button_highlighted"));
 
     public NotSuckyButton(int x, int y, int width, int height, Text message, PressAction onPress) {
@@ -21,8 +22,17 @@ public class NotSuckyButton extends ButtonWidget {
         this.buttonColor = color;
     }
 
+    public boolean detectHover(int mouseX, int mouseY) {
+        return mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
+    }
+
     @Override
     public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+        //This can fix text rendering over the wrong btn
+        //context.getMatrices().translate(0, 0,  1);
+
+        if (disableHover) hovered = false;
+
         context.setShaderColor(1.0f, 1.0f, 1.0f, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
@@ -33,15 +43,5 @@ public class NotSuckyButton extends ButtonWidget {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         int i = this.active ? buttonColor : 0xA0A0A0;
         drawMessage(context, textRenderer, i);
-    }
-
-    private int getTextureY() {
-        int i = 1;
-        if (!this.active) {
-            i = 0;
-        } else if (this.isSelected()) {
-            i = 2;
-        }
-        return 46 + i * 20;
     }
 }
