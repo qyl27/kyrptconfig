@@ -58,6 +58,13 @@ public class ExampleConfig implements ModMenuApi {
             }));
 
             blackListSection.addConfigItem(hideList);
+
+            new ConfigSection(configScreen, Text.translatable("Tab Test 1"));
+            new ConfigSection(configScreen, Text.translatable("Tab Test 2"));
+            new ConfigSection(configScreen, Text.translatable("Tab Test 3"));
+            new ConfigSection(configScreen, Text.translatable("Tab Test 4"));
+            new ConfigSection(configScreen, Text.translatable("Tab Test 5"));
+            new ConfigSection(configScreen, Text.translatable("Tab Test 6"));
             return configScreen;
         };
     }
