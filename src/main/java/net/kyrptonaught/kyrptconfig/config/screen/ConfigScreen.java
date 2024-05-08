@@ -20,6 +20,7 @@ public class ConfigScreen extends Screen {
     private NotSuckyButton scrollLeftBTN, scrollRightBTN;
     int horizontalScrollOffset = -1;
     private static final Identifier SCROLLER_TEXTURE = new Identifier("widget/scroller");
+    private static final Identifier OPTIONS_BACKGROUND_TEXTURE = new Identifier("textures/block/dirt.png");
 
     public ConfigScreen(Screen previousScreen, Text title) {
         super(title);
@@ -231,5 +232,11 @@ public class ConfigScreen extends Screen {
     @Override
     public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
 
+    }
+
+    private void renderBackgroundTexture(DrawContext context) {
+        context.setShaderColor(0.25F, 0.25F, 0.25F, 1.0F);
+        context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
+        context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 }
