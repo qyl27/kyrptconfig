@@ -30,9 +30,9 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.14.6",
+    "fabricloader": ">=0.15.11",
     "fabric": "*",
-    "java": ">=17"
+    "java": ">=21"
   },
   "custom": {
     "modmenu": {
