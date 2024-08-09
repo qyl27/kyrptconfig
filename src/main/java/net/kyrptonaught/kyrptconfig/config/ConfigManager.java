@@ -3,6 +3,7 @@ package net.kyrptonaught.kyrptconfig.config;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.kyrptonaught.jankson.Jankson;
+import net.minecraft.util.Identifier;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,7 +26,10 @@ public class ConfigManager {
     public void buildJankson() {
         JANKSON = new JanksonJsonLoader();
         Jankson.Builder builder = CustomJankson.customJanksonBuilder();
-        setJANKSON(builder.build());
+        setJANKSON(builder
+                .registerSerializer(Identifier.class, (identifier, marshaller) -> marshaller.serialize(identifier.toString()))
+                .registerDeserializer(String.class, Identifier.class, (s, m) -> Identifier.of(s))
+                .build());
     }
 
     public void buildGson() {
@@ -33,6 +37,7 @@ public class ConfigManager {
         ((GsonJsonLoader) Gson).provideGson(new GsonBuilder()
                 .setPrettyPrinting()
                 .setLenient()
+                .registerTypeAdapter(Identifier.class, new Identifier.Serializer())
                 .create());
     }
 
